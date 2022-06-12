@@ -6,6 +6,7 @@ use App\Repository\CountryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=CountryRepository::class)
@@ -21,16 +22,41 @@ class Country
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
+     * @Assert\Type("string")
+     * @Assert\Length(
+     *      max = 255
+     * )
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=2)
+     * @Assert\NotBlank
+     * @Assert\Type("string")
+     * @Assert\Length(
+     *      max = 2
+     * )
      */
-    private $abbr;
+    private $abbr2;
 
     /**
-     * @ORM\Column(type="string", length=4)
+     * @ORM\Column(type="string", length=3)
+     * @Assert\NotBlank
+     * @Assert\Type("string")
+     * @Assert\Length(
+     *      max = 3
+     * )
+     */
+    private $abbr3;
+
+    /**
+     * @ORM\Column(type="string", length=3)
+     * @Assert\NotBlank
+     * @Assert\Type("string")
+     * @Assert\Length(
+     *      max = 3
+     * )
      */
     private $code;
 
@@ -71,14 +97,26 @@ class Country
         return $this;
     }
 
-    public function getAbbr(): ?string
+    public function getAbbr2(): ?string
     {
-        return $this->abbr;
+        return $this->abbr2;
     }
 
-    public function setAbbr(string $abbr): self
+    public function setAbbr2(string $abbr2): self
     {
-        $this->abbr = $abbr;
+        $this->abbr2 = $abbr2;
+
+        return $this;
+    }
+
+    public function getAbbr3(): ?string
+    {
+        return $this->abbr3;
+    }
+
+    public function setAbbr3(string $abbr3): self
+    {
+        $this->abbr3 = $abbr3;
 
         return $this;
     }
@@ -100,9 +138,9 @@ class Country
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): self
+    public function setCreatedAt(\DateTimeImmutable $created_at = null): self
     {
-        $this->created_at = $created_at;
+        $this->created_at = $created_at ? $created_at : new \DateTimeImmutable();
 
         return $this;
     }
@@ -112,9 +150,9 @@ class Country
         return $this->updated_at;
     }
 
-    public function setUpdatedAt(\DateTimeImmutable $updated_at): self
+    public function setUpdatedAt(\DateTimeImmutable $updated_at = null): self
     {
-        $this->updated_at = $updated_at;
+        $this->updated_at = $updated_at ? $updated_at : new \DateTimeImmutable();
 
         return $this;
     }

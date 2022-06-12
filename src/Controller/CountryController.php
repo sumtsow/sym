@@ -59,6 +59,7 @@ class CountryController extends AbstractController
             $country->setUpdatedAt();
             $entityManager->persist($country);
             $entityManager->flush();
+            return $this->redirectToRoute('app_country');
             //return new Response('Saved new country with id '.$country->getId());
         }
         return $this->renderForm('country/country_form.html.twig', [

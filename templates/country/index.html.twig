@@ -5,33 +5,45 @@
 {% block body %}
 <h1>Country List</h1>
 <p><a href="{{ path('app_country_create') }}">Add new</a></p>
-  <table>
-    <thead>
-      <tr>
-        <th>id</th>
-        <th>name</th>
-        <th>abbr2</th>
-        <th>abbr3</th>
-        <th>code</th>
-        <th>created_at</th>
-        <th>updated_at</th>
-        <th colspan="2">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-    {% for country in countries %}
-      <tr>
-        <td>{{ country.getId() }}</td>
-        <td>{{ country.getName() }}</td>
-        <td>{{ country.getAbbr2() }}</td>
-        <td>{{ country.getAbbr3() }}</td>
-        <td>{{ country.getCode() }}</td>
-        <td>{{ country.getCreatedAt().format('H:i:s d.m.Y') }}</td>
-        <td>{{ country.getUpdatedAt().format('H:i:s d.m.Y') }}</td>
-        <td><a href="{{ path('app_country_edit', {id: country.getId()}) }}">Edit</a></td>
-        <td><a href="{{ path('app_country_destroy', {id: country.getId()}) }}">Delete</a></td>
-      </tr>
-    {% endfor %}
-    </tbody>
-  </table>
+<table style="width: 100%;">
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>name</th>
+      <th>abbr2</th>
+      <th>abbr3</th>
+      <th>code</th>
+      <th>created_at</th>
+      <th>updated_at</th>
+      <th colspan="2">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for country in countries %}
+    <tr>
+      <td>{{ country.getId() }}</td>
+      <td>{{ country.getName() }}</td>
+      <td>{{ country.getAbbr2() }}</td>
+      <td>{{ country.getAbbr3() }}</td>
+      <td>{{ country.getCode() }}</td>
+      <td>{{ country.getCreatedAt().format('H:i:s d.m.Y') }}</td>
+      <td>{{ country.getUpdatedAt().format('H:i:s d.m.Y') }}</td>
+      <td><a href="{{ path('app_country_edit', {id: country.getId()}) }}">Edit</a></td>
+      <td><a class="btn-del" id="btn-{{ country.getId() }}" href="{{ path('app_country_destroy', {id: country.getId()}) }}">Delete</a></td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.btn-del').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        if (!window.confirm('Are you sure to delete country item with id: ' + btn.id.split('-')[1] + '?')) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      });
+    });     
+  });
+</script>
 {% endblock %}

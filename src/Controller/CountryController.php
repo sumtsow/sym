@@ -68,24 +68,15 @@ class CountryController extends AbstractController
     }
 
     /**
-     * @Route("/country/{id}", name="app_country_destroy", methods={"DELETE"}, requirements={"id"="\d+"})
+     * @Route("/country/{id}", name="app_country_destroy", requirements={"id"="\d+"})
      */
     public function destroy(Request $request, ManagerRegistry $doctrine, int $id): Response
     {
         $entityManager = $doctrine->getManager();
         $country = $entityManager->getRepository(Country::class)->find($id);
-        $form = $this->form($country);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $country->setCreatedAt();
-            $country->setUpdatedAt();
-            $entityManager->persist($country);
-            $entityManager->flush();
-            //return new Response('Saved new country with id '.$country->getId());
-        }
-        return $this->renderForm('country/country_form.html.twig', [
-            'countryForm' => $form,
-        ]);
+        $entityManager->remove($country);
+        $entityManager->flush();
+        return $this->redirectToRoute('app_country');
     }
 
     private function form(Country $country)

@@ -16,14 +16,14 @@
     <body>
         {% block nav %}
         <div>
-        {% if app.user %}
+            {% if app.user %}
             <span>{{ app.user.lastname }} {{ app.user.firstname }}</span>
             <span><a href="{{ url('app_logout') }}">Logout</a></span>
-        {% else %}
+            {% else %}
             <span><a href="{{ url('app_login') }}">Login</a></span>
-        {% endif %}
+            {% endif %}
         </div>
-      {% endblock %}
+        {% endblock %}
         {% block body %}{% endblock %}
     </body>
 </html>

@@ -56,7 +56,6 @@ class CountryController extends AbstractController
         $form = $this->form($country);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $country->setCreatedAt();
             $country->setUpdatedAt();
             $entityManager->persist($country);
             $entityManager->flush();

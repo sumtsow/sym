@@ -14,6 +14,25 @@
         {% endblock %}
     </head>
     <body>
+        <style> 
+            body { font: 18px/1.5 sans-serif; }
+            table { width: 100%; }
+            table tr:nth-child(odd) td { background-color: #f3f3f3; }
+            table th, table td { margin: 5px 10px; }
+            #form div label {
+              display: inline-block;
+              width: 60px;
+              margin: 10px;
+            }
+            #form input {
+              padding: 4px 8px;
+            }
+            #form button {
+              margin: 30px 0 0 222px;
+              padding: 10px 20px;
+              font-size: 18px;
+            }
+        </style>
         {% block nav %}
         <div>
             {% if app.user %}

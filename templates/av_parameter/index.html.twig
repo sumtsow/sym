@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Available parameters List{% endblock %}
+
+{% block body %}
+<h1>Available parameters list</h1>
+<p><a href="{{ path('app_av_parameter_create') }}">Add new</a></p>
+<table>
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>name</th>
+      <th>type</th>
+      <th>created_at</th>
+      <th>updated_at</th>
+      <th colspan="2">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for av_parameter in av_parameters %}
+    <tr>
+      <td>{{ av_parameter.getId() }}</td>
+      <td>{{ av_parameter.getName() }}</td>
+      <td>{{ av_parameter.getType().getName() }}</td>
+      <td>{{ av_parameter.getCreatedAt().format('H:i:s d.m.Y') }}</td>
+      <td>{{ av_parameter.getUpdatedAt().format('H:i:s d.m.Y') }}</td>
+      <td><a href="{{ path('app_av_parameter_edit', {id: av_parameter.getId()}) }}">Edit</a></td>
+      <td><a class="btn-del" id="btn-{{ av_parameter.getId() }}" href="{{ path('app_av_parameter_destroy', {id: av_parameter.getId()}) }}">Delete</a></td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.btn-del').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        if (!window.confirm('Are you sure to delete available parameter item with id: ' + btn.id.split('-')[1] + '?')) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      });
+    });     
+  });
+</script>
+{% endblock %}

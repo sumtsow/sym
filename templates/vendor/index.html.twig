@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vendor list{% endblock %}
+
+{% block body %}
+<h1>Country list</h1>
+<p><a href="{{ path('app_vendor_create') }}">Add new</a></p>
+<table>
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>name</th>
+      <th>country</th>
+      <th>created_at</th>
+      <th>updated_at</th>
+      <th colspan="2">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for vendor in vendors %}
+    <tr>
+      <td>{{ vendor.getId() }}</td>
+      <td>{{ vendor.getName() }}</td>
+      <td>{{ vendor.getCountry().getName() }}</td>
+      <td>{{ vendor.getCreatedAt().format('H:i:s d.m.Y') }}</td>
+      <td>{{ vendor.getUpdatedAt().format('H:i:s d.m.Y') }}</td>
+      <td><a href="{{ path('app_vendor_edit', {id: vendor.getId()}) }}">Edit</a></td>
+      <td><a class="btn-del" id="btn-{{ vendor.getId() }}" href="{{ path('app_vendor_destroy', {id: vendor.getId()}) }}">Delete</a></td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.btn-del').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        if (!window.confirm('Are you sure to delete vendor item with id: ' + btn.id.split('-')[1] + '?')) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      });
+    });     
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Type list{% endblock %}
+
+{% block body %}
+<h1>Country list</h1>
+<p><a href="{{ path('app_type_create') }}">Add new</a></p>
+<table>
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>name</th>
+      <th>created_at</th>
+      <th>updated_at</th>
+      <th colspan="2">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for type in types %}
+    <tr>
+      <td>{{ type.getId() }}</td>
+      <td>{{ type.getName() }}</td>
+      <td>{{ type.getCreatedAt().format('H:i:s d.m.Y') }}</td>
+      <td>{{ type.getUpdatedAt().format('H:i:s d.m.Y') }}</td>
+      <td><a href="{{ path('app_type_edit', {id: type.getId()}) }}">Edit</a></td>
+      <td><a class="btn-del" id="btn-{{ type.getId() }}" href="{{ path('app_type_destroy', {id: type.getId()}) }}">Delete</a></td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.btn-del').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        if (!window.confirm('Are you sure to delete type item with id: ' + btn.id.split('-')[1] + '?')) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      });
+    });     
+  });
+</script>
+{% endblock %}

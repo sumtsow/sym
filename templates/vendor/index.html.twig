@@ -4,7 +4,7 @@
 
 {% block body %}
 <h1>Country list</h1>
-<p><a href="{{ path('app_vendor_create') }}">Add new</a></p>
+<p><a href="{{ path('app_admin_vendor_create') }}">Add new</a></p>
 <table>
   <thead>
     <tr>
@@ -24,8 +24,8 @@
       <td>{{ vendor.getCountry().getName() }}</td>
       <td>{{ vendor.getCreatedAt().format('H:i:s d.m.Y') }}</td>
       <td>{{ vendor.getUpdatedAt().format('H:i:s d.m.Y') }}</td>
-      <td><a href="{{ path('app_vendor_edit', {id: vendor.getId()}) }}">Edit</a></td>
-      <td><a class="btn-del" id="btn-{{ vendor.getId() }}" href="{{ path('app_vendor_destroy', {id: vendor.getId()}) }}">Delete</a></td>
+      <td><a href="{{ path('app_admin_vendor_edit', {id: vendor.getId()}) }}">Edit</a></td>
+      <td><a class="btn-del" id="btn-{{ vendor.getId() }}" href="{{ path('app_admin_vendor_destroy', {id: vendor.getId()}) }}">Delete</a></td>
     </tr>
   {% endfor %}
   </tbody>

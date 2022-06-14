@@ -4,14 +4,9 @@
 
 {% block body %}
 <h1>Home page</h1>
-<h2>Edit</h2>
+<h2>Tools</h2>
 <ul>
-  <li><a href="{{ path('app_device') }}">Devices</a></li>
-  <li><a href="{{ path('app_parameter') }}">Parameters</a></li>
-  <li><a href="{{ path('app_av_parameter') }}">Available parameters</a></li>
-  <li><a href="{{ path('app_param_option') }}">Parameter Options</a></li>
-  <li><a href="{{ path('app_type') }}">Types</a></li>
-  <li><a href="{{ path('app_vendor') }}">Vendors</a></li>
-  <li><a href="{{ path('app_country') }}">Countries</a></li>
+  <li><a href="{{ path('app_admin') }}">Admin Tools</a></li>
+  <li><a href="{{ path('app_profile') }}">User's Profile</a></li>
 </ul>
 {% endblock %}

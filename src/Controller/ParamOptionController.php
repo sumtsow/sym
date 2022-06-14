@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ParamOptionController extends AbstractController
 {
     /**
-     * @Route("/param_option", name="app_param_option")
+     * @Route("/admin/param_option", name="app_admin_param_option")
      */
     public function index(ManagerRegistry $doctrine): Response
     {
@@ -29,7 +29,7 @@ class ParamOptionController extends AbstractController
     }
 
     /**
-     * @Route("/param_option/create", name="app_param_option_create")
+     * @Route("/admin/param_option/create", name="app_admin_param_option_create")
      */
     public function create(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -49,7 +49,7 @@ class ParamOptionController extends AbstractController
     }
 
     /**
-     * @Route("/param_option/edit/{id}", name="app_param_option_edit", requirements={"id"="\d+"})
+     * @Route("/admin/param_option/edit/{id}", name="app_admin_param_option_edit", requirements={"id"="\d+"})
      */
     public function edit(Request $request, ManagerRegistry $doctrine, int $id): Response
     {
@@ -69,7 +69,7 @@ class ParamOptionController extends AbstractController
     }
 
     /**
-     * @Route("/param_option/{id}", name="app_param_option_destroy", requirements={"id"="\d+"})
+     * @Route("/admin/param_option/{id}", name="app_admin_param_option_destroy", requirements={"id"="\d+"})
      */
     public function destroy(Request $request, ManagerRegistry $doctrine, int $id): Response
     {

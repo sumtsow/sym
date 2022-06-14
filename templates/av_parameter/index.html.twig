@@ -4,7 +4,7 @@
 
 {% block body %}
 <h1>Available parameters list</h1>
-<p><a href="{{ path('app_av_parameter_create') }}">Add new</a></p>
+<p><a href="{{ path('app_admin_av_parameter_create') }}">Add new</a></p>
 <table>
   <thead>
     <tr>
@@ -24,8 +24,8 @@
       <td>{{ av_parameter.getType().getName() }}</td>
       <td>{{ av_parameter.getCreatedAt().format('H:i:s d.m.Y') }}</td>
       <td>{{ av_parameter.getUpdatedAt().format('H:i:s d.m.Y') }}</td>
-      <td><a href="{{ path('app_av_parameter_edit', {id: av_parameter.getId()}) }}">Edit</a></td>
-      <td><a class="btn-del" id="btn-{{ av_parameter.getId() }}" href="{{ path('app_av_parameter_destroy', {id: av_parameter.getId()}) }}">Delete</a></td>
+      <td><a href="{{ path('app_admin_av_parameter_edit', {id: av_parameter.getId()}) }}">Edit</a></td>
+      <td><a class="btn-del" id="btn-{{ av_parameter.getId() }}" href="{{ path('app_admin_av_parameter_destroy', {id: av_parameter.getId()}) }}">Delete</a></td>
     </tr>
   {% endfor %}
   </tbody>

@@ -4,7 +4,7 @@
 
 {% block body %}
 <h1>Country list</h1>
-<p><a href="{{ path('app_country_create') }}">Add new</a></p>
+<p><a href="{{ path('app_admin_country_create') }}">Add new</a></p>
 <table>
   <thead>
     <tr>
@@ -28,8 +28,8 @@
       <td>{{ country.getCode() }}</td>
       <td>{{ country.getCreatedAt().format('H:i:s d.m.Y') }}</td>
       <td>{{ country.getUpdatedAt().format('H:i:s d.m.Y') }}</td>
-      <td><a href="{{ path('app_country_edit', {id: country.getId()}) }}">Edit</a></td>
-      <td><a class="btn-del" id="btn-{{ country.getId() }}" href="{{ path('app_country_destroy', {id: country.getId()}) }}">Delete</a></td>
+      <td><a href="{{ path('app_admin_country_edit', {id: country.getId()}) }}">Edit</a></td>
+      <td><a class="btn-del" id="btn-{{ country.getId() }}" href="{{ path('app_admin_country_destroy', {id: country.getId()}) }}">Delete</a></td>
     </tr>
   {% endfor %}
   </tbody>

@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AvParameterController extends AbstractController
 {
     /**
-     * @Route("/av_parameter", name="app_av_parameter")
+     * @Route("/admin/av_parameter", name="app_admin_av_parameter")
      */
     public function index(ManagerRegistry $doctrine): Response
     {
@@ -29,7 +29,7 @@ class AvParameterController extends AbstractController
     }
 
     /**
-     * @Route("/av_parameter/create", name="app_av_parameter_create")
+     * @Route("/admin/av_parameter/create", name="app_admin_av_parameter_create")
      */
     public function create(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -49,7 +49,7 @@ class AvParameterController extends AbstractController
     }
 
     /**
-     * @Route("/av_parameter/edit/{id}", name="app_av_parameter_edit", requirements={"id"="\d+"})
+     * @Route("/admin/av_parameter/edit/{id}", name="app_admin_av_parameter_edit", requirements={"id"="\d+"})
      */
     public function edit(Request $request, ManagerRegistry $doctrine, int $id): Response
     {
@@ -69,7 +69,7 @@ class AvParameterController extends AbstractController
     }
 
     /**
-     * @Route("/av_parameter/{id}", name="app_av_parameter_destroy", requirements={"id"="\d+"})
+     * @Route("/admin/av_parameter/{id}", name="app_admin_av_parameter_destroy", requirements={"id"="\d+"})
      */
     public function destroy(Request $request, ManagerRegistry $doctrine, int $id): Response
     {

@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class VendorController extends AbstractController
 {
     /**
-     * @Route("/vendor", name="app_vendor")
+     * @Route("/admin/vendor", name="app_admin_vendor")
      */
     public function index(ManagerRegistry $doctrine): Response
     {
@@ -29,7 +29,7 @@ class VendorController extends AbstractController
     }
 
     /**
-     * @Route("/vendor/create", name="app_vendor_create")
+     * @Route("/admin/vendor/create", name="app_admin_vendor_create")
      */
     public function create(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -41,7 +41,7 @@ class VendorController extends AbstractController
           $vendor->setUpdatedAt();
           $entityManager->persist($vendor);
           $entityManager->flush();
-          return $this->redirectToRoute('app_vendor');
+          return $this->redirectToRoute('app_admin_vendor');
         }
         return $this->renderForm('vendor/vendor_form.html.twig', [
             'vendorForm' => $form,
@@ -49,7 +49,7 @@ class VendorController extends AbstractController
     }
 
     /**
-     * @Route("/vendor/edit/{id}", name="app_vendor_edit", requirements={"id"="\d+"})
+     * @Route("/admin/vendor/edit/{id}", name="app_admin_vendor_edit", requirements={"id"="\d+"})
      */
     public function edit(Request $request, ManagerRegistry $doctrine, int $id): Response
     {
@@ -61,7 +61,7 @@ class VendorController extends AbstractController
           $vendor->setUpdatedAt();
           $entityManager->persist($vendor);
           $entityManager->flush();
-          return $this->redirectToRoute('app_vendor');
+          return $this->redirectToRoute('app_admin_vendor');
         }
         return $this->renderForm('vendor/vendor_form.html.twig', [
             'vendorForm' => $form,
@@ -69,7 +69,7 @@ class VendorController extends AbstractController
     }
 
     /**
-     * @Route("/vendor/{id}", name="app_vendor_destroy", requirements={"id"="\d+"})
+     * @Route("/admin/vendor/{id}", name="app_admin_vendor_destroy", requirements={"id"="\d+"})
      */
     public function destroy(Request $request, ManagerRegistry $doctrine, int $id): Response
     {
@@ -77,7 +77,7 @@ class VendorController extends AbstractController
         $vendor = $entityManager->getRepository(Vendor::class)->find($id);
         $entityManager->remove($vendor);
         $entityManager->flush();
-        return $this->redirectToRoute('app_vendor');
+        return $this->redirectToRoute('app_admin_vendor');
     }
 
     private function form(Vendor $vendor, EntityManagerInterface $entityManager)

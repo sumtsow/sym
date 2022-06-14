@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+<h1>Home page</h1>
+<h2>Edit</h2>
+<ul>
+  <li><a href="{{ path('app_admin_device') }}">Devices</a></li>
+  <li><a href="{{ path('app_admin_parameter') }}">Parameters</a></li>
+  <li><a href="{{ path('app_admin_av_parameter') }}">Available parameters</a></li>
+  <li><a href="{{ path('app_admin_param_option') }}">Parameter Options</a></li>
+  <li><a href="{{ path('app_admin_type') }}">Types</a></li>
+  <li><a href="{{ path('app_admin_vendor') }}">Vendors</a></li>
+  <li><a href="{{ path('app_admin_country') }}">Countries</a></li>
+</ul>
+{% endblock %}

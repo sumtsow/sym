@@ -20,7 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ParameterController extends AbstractController
 {
     /**
-     * @Route("/parameter", name="app_parameter")
+     * @Route("/admin/parameter", name="app_admin_parameter")
      */
     public function index(ManagerRegistry $doctrine): Response
     {
@@ -31,7 +31,7 @@ class ParameterController extends AbstractController
     }
 
     /**
-     * @Route("/parameter/create", name="app_parameter_create")
+     * @Route("/admin/parameter/create", name="app_admin_parameter_create")
      */
     public function create(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -51,7 +51,7 @@ class ParameterController extends AbstractController
     }
 
     /**
-     * @Route("/parameter/edit/{id}", name="app_parameter_edit", requirements={"id"="\d+"})
+     * @Route("/admin/parameter/edit/{id}", name="app_admin_parameter_edit", requirements={"id"="\d+"})
      */
     public function edit(Request $request, ManagerRegistry $doctrine, int $id): Response
     {
@@ -71,7 +71,7 @@ class ParameterController extends AbstractController
     }
 
     /**
-     * @Route("/parameter/{id}", name="app_parameter_destroy", requirements={"id"="\d+"})
+     * @Route("/admin/parameter/{id}", name="app_admin_parameter_destroy", requirements={"id"="\d+"})
      */
     public function destroy(Request $request, ManagerRegistry $doctrine, int $id): Response
     {

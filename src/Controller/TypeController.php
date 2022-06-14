@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class TypeController extends AbstractController
 {
     /**
-     * @Route("/type", name="app_type")
+     * @Route("/admin/type", name="app_admin_type")
      */
     public function index(ManagerRegistry $doctrine): Response
     {
@@ -27,7 +27,7 @@ class TypeController extends AbstractController
     }
 
     /**
-     * @Route("/type/create", name="app_type_create")
+     * @Route("/admin/type/create", name="app_admin_type_create")
      */
     public function create(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -47,7 +47,7 @@ class TypeController extends AbstractController
     }
 
     /**
-     * @Route("/type/edit/{id}", name="app_type_edit", requirements={"id"="\d+"})
+     * @Route("/admin/type/edit/{id}", name="app_admin_type_edit", requirements={"id"="\d+"})
      */
     public function edit(Request $request, ManagerRegistry $doctrine, int $id): Response
     {
@@ -67,7 +67,7 @@ class TypeController extends AbstractController
     }
 
     /**
-     * @Route("/type/{id}", name="app_type_destroy", requirements={"id"="\d+"})
+     * @Route("/admin/type/{id}", name="app_admin_type_destroy", requirements={"id"="\d+"})
      */
     public function destroy(Request $request, ManagerRegistry $doctrine, int $id): Response
     {

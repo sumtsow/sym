@@ -19,7 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class DeviceController extends AbstractController
 {
     /**
-     * @Route("/device", name="app_device")
+     * @Route("/admin/device", name="app_admin_device")
      */
     public function index(ManagerRegistry $doctrine): Response
     {
@@ -30,7 +30,7 @@ class DeviceController extends AbstractController
     }
 
     /**
-     * @Route("/device/create", name="app_device_create")
+     * @Route("/admin/device/create", name="app_admin_device_create")
      */
     public function create(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -50,7 +50,7 @@ class DeviceController extends AbstractController
     }
 
     /**
-     * @Route("/device/edit/{id}", name="app_device_edit", requirements={"id"="\d+"})
+     * @Route("/admin/device/edit/{id}", name="app_admin_device_edit", requirements={"id"="\d+"})
      */
     public function edit(Request $request, ManagerRegistry $doctrine, int $id): Response
     {
@@ -70,7 +70,7 @@ class DeviceController extends AbstractController
     }
 
     /**
-     * @Route("/device/{id}", name="app_device_destroy", requirements={"id"="\d+"})
+     * @Route("/admin/device/{id}", name="app_admin_device_destroy", requirements={"id"="\d+"})
      */
     public function destroy(Request $request, ManagerRegistry $doctrine, int $id): Response
     {

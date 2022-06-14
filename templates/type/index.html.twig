@@ -4,7 +4,7 @@
 
 {% block body %}
 <h1>Country list</h1>
-<p><a href="{{ path('app_type_create') }}">Add new</a></p>
+<p><a href="{{ path('app_admin_type_create') }}">Add new</a></p>
 <table>
   <thead>
     <tr>
@@ -22,8 +22,8 @@
       <td>{{ type.getName() }}</td>
       <td>{{ type.getCreatedAt().format('H:i:s d.m.Y') }}</td>
       <td>{{ type.getUpdatedAt().format('H:i:s d.m.Y') }}</td>
-      <td><a href="{{ path('app_type_edit', {id: type.getId()}) }}">Edit</a></td>
-      <td><a class="btn-del" id="btn-{{ type.getId() }}" href="{{ path('app_type_destroy', {id: type.getId()}) }}">Delete</a></td>
+      <td><a href="{{ path('app_admin_type_edit', {id: type.getId()}) }}">Edit</a></td>
+      <td><a class="btn-del" id="btn-{{ type.getId() }}" href="{{ path('app_admin_type_destroy', {id: type.getId()}) }}">Delete</a></td>
     </tr>
   {% endfor %}
   </tbody>

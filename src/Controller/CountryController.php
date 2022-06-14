@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CountryController extends AbstractController
 {
     /**
-     * @Route("/country", name="app_country")
+     * @Route("/admin/country", name="app_admin_country")
      */
     public function index(ManagerRegistry $doctrine): Response
     {
@@ -27,7 +27,7 @@ class CountryController extends AbstractController
     }
 
     /**
-     * @Route("/country/create", name="app_country_create")
+     * @Route("/admin/country/create", name="app_admin_country_create")
      */
     public function create(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -47,7 +47,7 @@ class CountryController extends AbstractController
     }
 
     /**
-     * @Route("/country/edit/{id}", name="app_country_edit", requirements={"id"="\d+"})
+     * @Route("/admin/country/edit/{id}", name="app_admin_country_edit", requirements={"id"="\d+"})
      */
     public function edit(Request $request, ManagerRegistry $doctrine, int $id): Response
     {
@@ -60,7 +60,6 @@ class CountryController extends AbstractController
             $entityManager->persist($country);
             $entityManager->flush();
             return $this->redirectToRoute('app_country');
-            //return new Response('Saved new country with id '.$country->getId());
         }
         return $this->renderForm('country/country_form.html.twig', [
             'countryForm' => $form,
@@ -68,7 +67,7 @@ class CountryController extends AbstractController
     }
 
     /**
-     * @Route("/country/{id}", name="app_country_destroy", requirements={"id"="\d+"})
+     * @Route("/admin/country/{id}", name="app_admin_country_destroy", requirements={"id"="\d+"})
      */
     public function destroy(Request $request, ManagerRegistry $doctrine, int $id): Response
     {

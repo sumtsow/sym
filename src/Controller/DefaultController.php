@@ -18,4 +18,12 @@ class DefaultController extends AbstractController
             'controller_name' => 'DefaultController'
         ]);
     }
+
+        /**
+     * @Route("/home", name="app_home")
+     */
+    public function home(): Response
+    {
+        return $this->render('home/index.html.twig');
+    }
 }

@@ -45,9 +45,15 @@ class AvParameter
      */
     private $paramOptions;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Parameter::class, mappedBy="av_parameter")
+     */
+    private $parameters;
+
     public function __construct()
     {
         $this->paramOptions = new ArrayCollection();
+        $this->parameters = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -127,6 +133,36 @@ class AvParameter
             // set the owning side to null (unless already changed)
             if ($paramOption->getAvParameter() === $this) {
                 $paramOption->setAvParameter(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Parameter>
+     */
+    public function getParameters(): Collection
+    {
+        return $this->parameters;
+    }
+
+    public function addParameter(Parameter $parameter): self
+    {
+        if (!$this->parameters->contains($parameter)) {
+            $this->parameters[] = $parameter;
+            $parameter->setAvParameter($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParameter(Parameter $parameter): self
+    {
+        if ($this->parameters->removeElement($parameter)) {
+            // set the owning side to null (unless already changed)
+            if ($parameter->getAvParameter() === $this) {
+                $parameter->setAvParameter(null);
             }
         }
 

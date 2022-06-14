@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Parameter list{% endblock %}
+
+{% block body %}
+<h1>Parameter list</h1>
+<p><a href="{{ path('app_parameter_create') }}">Add new</a></p>
+<table>
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>device</th>
+      <th>parameter</th>
+      <th>value</th>
+      <th>custom_value</th>
+      <th>created_at</th>
+      <th>updated_at</th>
+      <th colspan="2">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for parameter in parameters %}
+    <tr>
+      <td>{{ parameter.getId() }}</td>
+      <td>{{ parameter.getDevice().getName() }}</td>
+      <td>{{ parameter.getAvParameter().getName() }}</td>
+      <td>{{ parameter.getValue() ? parameter.getValue().getValue() : '' }}</td>
+      <td>{{ parameter.getCustomValue() ? parameter.getCustomValue() : '' }}</td>
+      <td>{{ parameter.getCreatedAt().format('H:i:s d.m.Y') }}</td>
+      <td>{{ parameter.getUpdatedAt().format('H:i:s d.m.Y') }}</td>
+      <td><a href="{{ path('app_parameter_edit', {id: parameter.getId()}) }}">Edit</a></td>
+      <td><a class="btn-del" id="btn-{{ parameter.getId() }}" href="{{ path('app_parameter_destroy', {id: parameter.getId()}) }}">Delete</a></td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.btn-del').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        if (!window.confirm('Are you sure to delete parameter item with id: ' + btn.id.split('-')[1] + '?')) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      });
+    });     
+  });
+</script>
+{% endblock %}

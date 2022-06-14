@@ -38,6 +38,17 @@ class Parameter
      */
     private $updated_at;
 
+    /**
+     * @ORM\Column(type="string", length=1023, nullable=true)
+     */
+    private $custom_value;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=AvParameter::class, inversedBy="parameters")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $av_parameter;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -72,9 +83,9 @@ class Parameter
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): self
+    public function setCreatedAt(\DateTimeImmutable $created_at = null): self
     {
-        $this->created_at = $created_at;
+        $this->created_at = $created_at ? $created_at : new \DateTimeImmutable();
 
         return $this;
     }
@@ -84,9 +95,33 @@ class Parameter
         return $this->updated_at;
     }
 
-    public function setUpdatedAt(\DateTimeImmutable $updated_at): self
+    public function setUpdatedAt(\DateTimeImmutable $updated_at = null): self
     {
-        $this->updated_at = $updated_at;
+        $this->updated_at = $updated_at ? $updated_at : new \DateTimeImmutable();
+
+        return $this;
+    }
+
+    public function getCustomValue(): ?string
+    {
+        return $this->custom_value;
+    }
+
+    public function setCustomValue(?string $custom_value): self
+    {
+        $this->custom_value = $custom_value;
+
+        return $this;
+    }
+
+    public function getAvParameter(): ?AvParameter
+    {
+        return $this->av_parameter;
+    }
+
+    public function setAvParameter(?AvParameter $av_parameter): self
+    {
+        $this->av_parameter = $av_parameter;
 
         return $this;
     }

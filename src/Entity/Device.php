@@ -102,9 +102,9 @@ class Device
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): self
+    public function setCreatedAt(\DateTimeImmutable $created_at = null): self
     {
-        $this->created_at = $created_at;
+        $this->created_at = $created_at ? $created_at : new \DateTimeImmutable();
 
         return $this;
     }
@@ -114,9 +114,9 @@ class Device
         return $this->updated_at;
     }
 
-    public function setUpdatedAt(\DateTimeImmutable $updated_at): self
+    public function setUpdatedAt(\DateTimeImmutable $updated_at = null): self
     {
-        $this->updated_at = $updated_at;
+        $this->updated_at = $updated_at ? $updated_at : new \DateTimeImmutable();
 
         return $this;
     }

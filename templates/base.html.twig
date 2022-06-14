@@ -21,7 +21,7 @@
             table th, table td { margin: 5px 10px; }
             #form div label {
               display: inline-block;
-              width: 65px;
+              width: 130px;
               margin: 10px;
             }
             #form input, #form select {
@@ -29,8 +29,8 @@
               width: 230px;
             }
             #form button {
-              margin: 30px 0 0 222px;
-              padding: 10px 20px;
+              margin: 30px 0 0 318px;
+              padding: 5px 20px;
               font-size: 18px;
             }
         </style>
@@ -38,6 +38,7 @@
         <div>
             {% if app.user %}
             <span>{{ app.user.lastname }} {{ app.user.firstname }}</span>
+            <span><a href="{{ url('app_home') }}">Home</a></span>
             <span><a href="{{ url('app_logout') }}">Logout</a></span>
             {% else %}
             <span><a href="{{ url('app_login') }}">Login</a></span>

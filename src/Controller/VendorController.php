@@ -90,6 +90,15 @@ class VendorController extends AbstractController
                 'choice_label' => function(?Country $country) {
                     return $country ? $country->getName() : '';
                 },
+                'choice_attr' => function($country, $key, $value) {
+                    return [
+                        'class' => 'country-option',
+                        //'data-code' => $country->getCode(),
+                        //'data-abbr2' => $country->getAbbr2(),
+                        //'data-abbr3' => $country->getAbbr3(),
+                        'style' => 'background-image:url(/images/flags/'.$country->getAbbr2().'.png);',
+                    ];
+                }
             ])
             ->add('save', SubmitType::class, ['label' => 'Save'])
             ->add('id', HiddenType::class, ['data_class' => null, 'mapped' => false,]);

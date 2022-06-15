@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ParameterRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ParameterRepository::class)
@@ -40,6 +41,11 @@ class Parameter
 
     /**
      * @ORM\Column(type="string", length=1023, nullable=true)
+     * @Assert\NotBlank
+     * @Assert\Type("string")
+     * @Assert\Length(
+     *   max = 1023
+     * )
      */
     private $custom_value;
 

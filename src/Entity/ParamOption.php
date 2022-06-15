@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ParamOptionRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ParamOptionRepository::class)
@@ -19,6 +20,11 @@ class ParamOption
 
     /**
      * @ORM\Column(type="string", length=1023)
+     * @Assert\NotBlank
+     * @Assert\Type("string")
+     * @Assert\Length(
+     *   max = 1023
+     * )
      */
     private $value;
 

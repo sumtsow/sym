@@ -6,6 +6,7 @@ use App\Repository\DeviceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=DeviceRepository::class)
@@ -21,6 +22,11 @@ class Device
 
     /**
      * @ORM\Column(type="string", length=511)
+     * @Assert\NotBlank
+     * @Assert\Type("string")
+     * @Assert\Length(
+     *   max = 511
+     * )
      */
     private $name;
 

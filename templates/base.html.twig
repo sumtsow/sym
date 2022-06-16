@@ -14,37 +14,11 @@
         {% endblock %}
     </head>
     <body>
-        <style> 
-            body { font: 18px/1.5 sans-serif; }
-            table { width: 100%; }
-            table tr:nth-child(odd) td { background-color: #f3f3f3; }
-            table th, table td { margin: 5px 10px; }
-            #form div label {
-              display: inline-block;
-              width: 130px;
-              margin: 10px;
-            }
-            #form input, #form select {
-              padding: 4px 8px;
-              width: 230px;
-            }
-            #form button {
-              margin: 30px 0 0 318px;
-              padding: 5px 20px;
-              font-size: 18px;
-            }
-        </style>
-        {% block nav %}
-        <div>
-            {% if app.user %}
-            <span>{{ app.user.lastname }} {{ app.user.firstname }}</span>
-            <span><a href="{{ url('app_home') }}">Home</a></span>
-            <span><a href="{{ url('app_logout') }}">Logout</a></span>
-            {% else %}
-            <span><a href="{{ url('app_login') }}">Login</a></span>
-            {% endif %}
-        </div>
+        {% block navbar %}
+          {% include 'navbar.html.twig' %}
         {% endblock %}
+        <div class="container-fluid p-2">
         {% block body %}{% endblock %}
+        </div>
     </body>
 </html>

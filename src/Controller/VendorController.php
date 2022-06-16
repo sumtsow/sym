@@ -90,13 +90,13 @@ class VendorController extends AbstractController
                 'choice_label' => function(?Country $country) {
                     return $country ? $country->getName() : '';
                 },
-                'choice_attr' => function($country, $key, $value) {
+                'choice_attr' => function($country) {
                     return [
                         'class' => 'country-option',
-                        //'data-code' => $country->getCode(),
-                        //'data-abbr2' => $country->getAbbr2(),
+                        'data-abbr2' => $country->getAbbr2(),
                         //'data-abbr3' => $country->getAbbr3(),
-                        'style' => 'background-image:url(/images/flags/'.$country->getAbbr2().'.png);',
+                        //'data-code' => $country->getCode(),
+                        //'style' => 'background-image:url(/images/flags/'.$country->getAbbr2().'.png);',
                     ];
                 }
             ])

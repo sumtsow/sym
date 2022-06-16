@@ -5,16 +5,17 @@
         <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
 
-    <form action="{{ path('app_login') }}" method="post">
+    <form class="mx-auto login-form" action="{{ path('app_login') }}" method="post">
         <label for="username">Email:</label>
-        <input type="text" id="username" name="_username" value="{{ last_username }}"/>
+        <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}"/>
 
         <label for="password">Password:</label>
-        <input type="password" id="password" name="_password"/>
+        <input class="form-control" type="password" id="password" name="_password"/>
 
         {# If you want to control the URL the user is redirected to on success
         <input type="hidden" name="_target_path" value="/account"/> #}
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-        <button type="submit">login</button>
+        <button class="btn btn-primary mt-3 me-3" type="submit">login</button>
+        <a class="btn btn-outline-primary mt-3 ms-5" href="{{ path('app_register') }}">Not yet registered?</a>
     </form>
 {% endblock %}

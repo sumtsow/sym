@@ -43,7 +43,7 @@ class ParameterController extends AbstractController
           $parameter->setUpdatedAt();
           $entityManager->persist($parameter);
           $entityManager->flush();
-          return $this->redirectToRoute('app_parameter');
+          return $this->redirectToRoute('app_admin_parameter');
         }
         return $this->renderForm('parameter/parameter_form.html.twig', [
             'parameterForm' => $form,
@@ -63,7 +63,7 @@ class ParameterController extends AbstractController
           $parameter->setUpdatedAt();
           $entityManager->persist($parameter);
           $entityManager->flush();
-          return $this->redirectToRoute('app_parameter');
+          return $this->redirectToRoute('app_admin_parameter');
         }
         return $this->renderForm('parameter/parameter_form.html.twig', [
             'parameterForm' => $form,
@@ -79,7 +79,7 @@ class ParameterController extends AbstractController
         $parameter = $entityManager->getRepository(Parameter::class)->find($id);
         $entityManager->remove($parameter);
         $entityManager->flush();
-        return $this->redirectToRoute('app_parameter');
+        return $this->redirectToRoute('app_admin_parameter');
     }
 
     private function form(Parameter $parameter, EntityManagerInterface $entityManager)
@@ -89,6 +89,7 @@ class ParameterController extends AbstractController
         $paramOptions = $entityManager->getRepository(ParamOption::class)->findAll();
         $form = $this->createFormBuilder($parameter)
             ->add('device', ChoiceType::class, [
+                'attr' => ['class' => 'form-select'],
                 'choices'  => $devices,
                 'choice_label' => function(?Device $device) {
                     return $device ? $device->getName() : '';
@@ -96,12 +97,14 @@ class ParameterController extends AbstractController
             ])
             ->add('av_parameter', ChoiceType::class, [
                 'label' => 'Parameter',
+                'attr' => ['class' => 'form-select'],
                 'choices'  => $avParameters,
                 'choice_label' => function(?AvParameter $avParameter) {
                     return $avParameter ? $avParameter->getName() : '';
                 },
             ])
             ->add('value', ChoiceType::class, [
+                'attr' => ['class' => 'form-select'],
                 'placeholder' => '-',
                 'required' => false,
                 'choices'  => $paramOptions,
@@ -109,8 +112,15 @@ class ParameterController extends AbstractController
                     return $paramOption ? $paramOption->getValue() : '';
                 },
             ])
-            ->add('custom_value', TextType::class, ['label' => 'Custom value'])
-            ->add('save', SubmitType::class, ['label' => 'Save'])
+            ->add('custom_value', TextType::class, [
+                'label' => 'Custom value',
+                'required' => false,
+                'attr' => ['class' => 'form-control'],
+            ])
+            ->add('save', SubmitType::class, [
+                'label' => 'Save',
+                'attr' => ['class' => 'btn btn-primary mt-3'],
+                ])
             ->add('id', HiddenType::class, ['data_class' => null, 'mapped' => false,]);
         return $form->getForm();
     }

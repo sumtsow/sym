@@ -4,8 +4,8 @@
 
 {% block body %}
 <h1>Device list</h1>
-<p><a href="{{ path('app_admin_device_create') }}">Add new</a></p>
-<table>
+<p><a class="btn btn-primary" role="button" href="{{ path('app_admin_device_create') }}">Add new</a></p>
+<table class="table table-responsive table-striped">
   <thead>
     <tr>
       <th>id</th>
@@ -26,8 +26,8 @@
       <td>{{ device.getVendor().getName() }}</td>
       <td>{{ device.getCreatedAt().format('H:i:s d.m.Y') }}</td>
       <td>{{ device.getUpdatedAt().format('H:i:s d.m.Y') }}</td>
-      <td><a href="{{ path('app_admin_device_edit', {id: device.getId()}) }}">Edit</a></td>
-      <td><a class="btn-del" id="btn-{{ device.getId() }}" href="{{ path('app_admin_device_destroy', {id: device.getId()}) }}">Delete</a></td>
+      <td><a class="btn btn-outline-primary" href="{{ path('app_admin_device_edit', {id: device.getId()}) }}">Edit</a></td>
+      <td><a class="btn btn-outline-danger btn-del" id="btn-{{ device.getId() }}" href="{{ path('app_admin_device_destroy', {id: device.getId()}) }}">Delete</a></td>
     </tr>
   {% endfor %}
   </tbody>

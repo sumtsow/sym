@@ -41,7 +41,7 @@ class VendorController extends AbstractController
           $vendor->setUpdatedAt();
           $entityManager->persist($vendor);
           $entityManager->flush();
-          return $this->redirectToRoute('app_admin_vendor');
+          return $this->redirectToRoute('app_admin_admin_vendor');
         }
         return $this->renderForm('vendor/vendor_form.html.twig', [
             'vendorForm' => $form,
@@ -84,8 +84,11 @@ class VendorController extends AbstractController
     {
         $countries = $entityManager->getRepository(Country::class)->findAll();
         $form = $this->createFormBuilder($vendor)
-            ->add('name', TextType::class)
+            ->add('name', TextType::class, [
+                'attr' => ['class' => 'form-control'],
+            ])
             ->add('country', ChoiceType::class, [
+                'attr' => ['class' => 'form-select'],
                 'choices'  => $countries,
                 'choice_label' => function(?Country $country) {
                     return $country ? $country->getName() : '';
@@ -100,7 +103,10 @@ class VendorController extends AbstractController
                     ];
                 }
             ])
-            ->add('save', SubmitType::class, ['label' => 'Save'])
+            ->add('save', SubmitType::class, [
+                'label' => 'Save',
+                'attr' => ['class' => 'btn btn-primary mt-3'],
+                ])
             ->add('id', HiddenType::class, ['data_class' => null, 'mapped' => false,]);
         return $form->getForm();
     }

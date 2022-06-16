@@ -39,7 +39,7 @@ class TypeController extends AbstractController
           $type->setUpdatedAt();
           $entityManager->persist($type);
           $entityManager->flush();
-          return $this->redirectToRoute('app_type');
+          return $this->redirectToRoute('app_admin_type');
         }
         return $this->renderForm('type/type_form.html.twig', [
             'typeForm' => $form,
@@ -59,7 +59,7 @@ class TypeController extends AbstractController
           $type->setUpdatedAt();
           $entityManager->persist($type);
           $entityManager->flush();
-          return $this->redirectToRoute('app_type');
+          return $this->redirectToRoute('app_admin_type');
         }
         return $this->renderForm('type/type_form.html.twig', [
             'typeForm' => $form,
@@ -75,14 +75,19 @@ class TypeController extends AbstractController
         $type = $entityManager->getRepository(Type::class)->find($id);
         $entityManager->remove($type);
         $entityManager->flush();
-        return $this->redirectToRoute('app_type');
+        return $this->redirectToRoute('app_admin_type');
     }
 
     private function form(Type $type)
     {
         $form = $this->createFormBuilder($type)
-            ->add('name', TextType::class)
-            ->add('save', SubmitType::class, ['label' => 'Save'])
+            ->add('name', TextType::class, [
+                'attr' => ['class' => 'form-control'],
+            ])
+            ->add('save', SubmitType::class, [
+                'label' => 'Save',
+                'attr' => ['class' => 'btn btn-primary mt-3'],
+                ])
             ->add('id', HiddenType::class, ['data_class' => null, 'mapped' => false,]);
         return $form->getForm();
     }

@@ -41,7 +41,7 @@ class AvParameterController extends AbstractController
           $avParameter->setUpdatedAt();
           $entityManager->persist($avParameter);
           $entityManager->flush();
-          return $this->redirectToRoute('app_av_parameter');
+          return $this->redirectToRoute('app_admin_av_parameter');
         }
         return $this->renderForm('av_parameter/av_parameter_form.html.twig', [
             'avParameterForm' => $form,
@@ -61,7 +61,7 @@ class AvParameterController extends AbstractController
           $avParameter->setUpdatedAt();
           $entityManager->persist($avParameter);
           $entityManager->flush();
-          return $this->redirectToRoute('app_av_parameter');
+          return $this->redirectToRoute('app_admin_av_parameter');
         }
         return $this->renderForm('av_parameter/av_parameter_form.html.twig', [
             'avParameterForm' => $form,
@@ -77,21 +77,27 @@ class AvParameterController extends AbstractController
         $avParameter = $entityManager->getRepository(AvParameter::class)->find($id);
         $entityManager->remove($avParameter);
         $entityManager->flush();
-        return $this->redirectToRoute('app_av_parameter');
+        return $this->redirectToRoute('app_admin_av_parameter');
     }
 
     private function form(AvParameter $avParameter, EntityManagerInterface $entityManager)
     {
         $types = $entityManager->getRepository(Type::class)->findAll();
         $form = $this->createFormBuilder($avParameter)
-            ->add('name', TextType::class)
+            ->add('name', TextType::class, [
+                'attr' => ['class' => 'form-control'],
+            ])
             ->add('type', ChoiceType::class, [
+                'attr' => ['class' => 'form-select'],
                 'choices'  => $types,
                 'choice_label' => function(?Type $type) {
                     return $type ? $type->getName() : '';
                 },
             ])
-            ->add('save', SubmitType::class, ['label' => 'Save'])
+            ->add('save', SubmitType::class, [
+                'label' => 'Save',
+                'attr' => ['class' => 'btn btn-primary mt-3'],
+                ])
             ->add('id', HiddenType::class, ['data_class' => null, 'mapped' => false,]);
         return $form->getForm();
     }

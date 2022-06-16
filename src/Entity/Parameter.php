@@ -41,7 +41,6 @@ class Parameter
 
     /**
      * @ORM\Column(type="string", length=1023, nullable=true)
-     * @Assert\NotBlank
      * @Assert\Type("string")
      * @Assert\Length(
      *   max = 1023

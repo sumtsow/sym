@@ -42,7 +42,7 @@ class DeviceController extends AbstractController
           $device->setUpdatedAt();
           $entityManager->persist($device);
           $entityManager->flush();
-          return $this->redirectToRoute('app_device');
+          return $this->redirectToRoute('app_admin_device');
         }
         return $this->renderForm('device/device_form.html.twig', [
             'deviceForm' => $form,
@@ -62,7 +62,7 @@ class DeviceController extends AbstractController
           $device->setUpdatedAt();
           $entityManager->persist($device);
           $entityManager->flush();
-          return $this->redirectToRoute('app_device');
+          return $this->redirectToRoute('app_admin_device');
         }
         return $this->renderForm('device/device_form.html.twig', [
             'deviceForm' => $form,
@@ -78,7 +78,7 @@ class DeviceController extends AbstractController
         $device = $entityManager->getRepository(Device::class)->find($id);
         $entityManager->remove($device);
         $entityManager->flush();
-        return $this->redirectToRoute('app_device');
+        return $this->redirectToRoute('app_admin_device');
     }
 
     private function form(Device $device, EntityManagerInterface $entityManager)
@@ -86,20 +86,27 @@ class DeviceController extends AbstractController
         $types = $entityManager->getRepository(Type::class)->findAll();
         $vendors = $entityManager->getRepository(Vendor::class)->findAll();
         $form = $this->createFormBuilder($device)
-            ->add('name', TextType::class)
+            ->add('name', TextType::class, [
+                'attr' => ['class' => 'form-control'],
+            ])
             ->add('type', ChoiceType::class, [
+                'attr' => ['class' => 'form-select'],
                 'choices'  => $types,
                 'choice_label' => function(?Type $type) {
                     return $type ? $type->getName() : '';
                 },
             ])
             ->add('vendor', ChoiceType::class, [
+                'attr' => ['class' => 'form-select'],
                 'choices'  => $vendors,
                 'choice_label' => function(?Vendor $vendor) {
                     return $vendor ? $vendor->getName() : '';
                 },
             ])
-            ->add('save', SubmitType::class, ['label' => 'Save'])
+            ->add('save', SubmitType::class, [
+                'label' => 'Save',
+                'attr' => ['class' => 'btn btn-primary mt-3'],
+                ])
             ->add('id', HiddenType::class, ['data_class' => null, 'mapped' => false,]);
         return $form->getForm();
     }

@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Main{% endblock %}
+
+{% block body %}
+<h1>{{ device.name }}</h1>
+<div class="row">
+  <div class="col-auto">Type</div>
+  <div class="col">{{ device.getType().getName() }}</div>
+</div>
+<div class="row">
+  <div class="col-auto">Vendor</div>
+  <div class="col">{{ device.getVendor().getName() }}</div>
+</div>
+<h4>Parameters</h4>
+  {% for parameter in device.getParameters() %}
+<div class="row">
+  <div class="col-auto">{{ parameter.getAvParameter().getName() }}</div>
+  <div class="col">{{ parameter.getValue() ? parameter.getValue().getValue() : parameter.getCustomValue() }}</div>
+</div>
+  {% endfor %}
+{% endblock %}

@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Device;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,10 +14,20 @@ class DefaultController extends AbstractController
     /**
      * @Route("/", name="app_default")
      */
-    public function index(): Response
+    public function index(ManagerRegistry $doctrine): Response
     {
         return $this->render('default/index.html.twig', [
-            'controller_name' => 'DefaultController'
+            'devices' => $doctrine->getRepository(Device::class)->findAll()
+        ]);
+    }
+
+    /**
+     * @Route("/device/{id}", name="app_device_edit")
+     */
+    public function show(ManagerRegistry $doctrine, int $id): Response
+    {
+        return $this->render('device/show.html.twig', [
+            'device' => $doctrine->getRepository(Device::class)->find($id)
         ]);
     }
 

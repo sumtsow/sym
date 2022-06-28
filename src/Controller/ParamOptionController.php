@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\ParamOption;
 use App\Entity\AvParameter;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -22,9 +23,8 @@ class ParamOptionController extends AbstractController
      */
     public function index(ManagerRegistry $doctrine): Response
     {
-        $repository = $doctrine->getRepository(ParamOption::class);
         return $this->render('param_option/index.html.twig', [
-            'param_options' => $repository->findAll(),
+            'param_options' => $doctrine->getRepository(ParamOption::class)->findAll(),
         ]);
     }
 
@@ -33,8 +33,9 @@ class ParamOptionController extends AbstractController
      */
     public function create(Request $request, EntityManagerInterface $entityManager): Response
     {
+        $type_id = intval($request->query->get('type'));
         $paramOption = new ParamOption();
-        $form = self::form($paramOption, $entityManager);
+        $form = self::form($paramOption, $entityManager, $type_id);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
           $paramOption->setCreatedAt();
@@ -53,9 +54,10 @@ class ParamOptionController extends AbstractController
      */
     public function edit(Request $request, ManagerRegistry $doctrine, int $id): Response
     {
+        $type_id = intval($request->query->get('type'));
         $entityManager = $doctrine->getManager();
         $paramOption = $entityManager->getRepository(ParamOption::class)->find($id);
-        $form = $this->form($paramOption, $entityManager);
+        $form = $this->form($paramOption, $entityManager, $type_id);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
           $paramOption->setUpdatedAt();
@@ -80,9 +82,13 @@ class ParamOptionController extends AbstractController
         return $this->redirectToRoute('app_admin_param_option');
     }
 
-    private function form(ParamOption $paramOption, EntityManagerInterface $entityManager)
+    private function form(ParamOption $paramOption, EntityManagerInterface $entityManager, int $type_id = 0)
     {
-        $avParameters = $entityManager->getRepository(AvParameter::class)->findAll();
+        //$type_id = intval($type_id);
+        $rsm = new ResultSetMapping();
+        $query = $entityManager->createNativeQuery('SELECT id, type_id, name, created_at, updated_at FROM av_parameter' . ($type_id ? ' WHERE type_id = ?' : ''), $rsm);
+        $query->setParameter(1, $type_id);
+        $avParameters = $query->getResult();
         $form = $this->createFormBuilder($paramOption)
             ->add('av_parameter', ChoiceType::class, [
                 'attr' => ['class' => 'form-select'],

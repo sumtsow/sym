@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ParameterRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=ParameterRepository::class)
@@ -53,6 +54,11 @@ class Parameter
      * @ORM\JoinColumn(nullable=false)
      */
     private $av_parameter;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $prio;
 
     public function getId(): ?int
     {
@@ -127,6 +133,18 @@ class Parameter
     public function setAvParameter(?AvParameter $av_parameter): self
     {
         $this->av_parameter = $av_parameter;
+
+        return $this;
+    }
+
+    public function getPrio(): ?int
+    {
+        return $this->prio;
+    }
+
+    public function setPrio(int $prio): self
+    {
+        $this->prio = $prio;
 
         return $this;
     }

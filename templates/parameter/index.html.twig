@@ -10,6 +10,7 @@
     <tr>
       <th>id</th>
       <th>device</th>
+      <th>prio</th>
       <th>parameter</th>
       <th>value</th>
       <th>custom_value</th>
@@ -23,6 +24,7 @@
     <tr>
       <td>{{ parameter.getId() }}</td>
       <td>{{ parameter.getDevice().getName() }}</td>
+      <td>{{ parameter.getPrio() }}</td>
       <td>{{ parameter.getAvParameter().getName() }}</td>
       <td>{{ parameter.getValue() ? parameter.getValue().getValue() : '' }}</td>
       <td>{{ parameter.getCustomValue() ? parameter.getCustomValue() : '' }}</td>

@@ -54,6 +54,7 @@ class Device
 
     /**
      * @ORM\OneToMany(targetEntity=Parameter::class, mappedBy="device", orphanRemoval=true)
+     * @ORM\OrderBy({"prio" = "ASC"})
      */
     private $parameters;
 

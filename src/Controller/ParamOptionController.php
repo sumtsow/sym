@@ -84,11 +84,12 @@ class ParamOptionController extends AbstractController
 
     private function form(ParamOption $paramOption, EntityManagerInterface $entityManager, int $type_id = 0)
     {
-        //$type_id = intval($type_id);
+        $type_id = intval($type_id);
         $rsm = new ResultSetMapping();
-        $query = $entityManager->createNativeQuery('SELECT id, type_id, name, created_at, updated_at FROM av_parameter' . ($type_id ? ' WHERE type_id = ?' : ''), $rsm);
-        $query->setParameter(1, $type_id);
-        $avParameters = $query->getResult();
+        /*$query = $entityManager->createNativeQuery('SELECT `id`, `type_id`, `name`, `created_at`, `updated_at` FROM `av_parameter`  WHERE ' . ($type_id ? '`type_id` = ?' : '1'), $rsm);
+        if ($type_id) $query->setParameter(1, $type_id);
+        $avParameters = $query->getResult();*/
+        $avParameters = $entityManager->getRepository(AvParameter::class)->findAll();
         $form = $this->createFormBuilder($paramOption)
             ->add('av_parameter', ChoiceType::class, [
                 'attr' => ['class' => 'form-select'],

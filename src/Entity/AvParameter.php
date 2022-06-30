@@ -174,4 +174,20 @@ class AvParameter
 
         return $this;
     }
+
+    public static function toArray($avParameters): array
+    {
+        if (!count($avParameters)) return [];
+        $parametersArray = [];
+        foreach($avParameters as $parameter) {
+            $parametersArray[$parameter->getId()] = [
+                'id' => $parameter->getId(),
+                'name' => $parameter->getName(),
+                'type' => $parameter->getType()->getName(),
+                'created_at' => $parameter->getCreatedAt(),
+                'updated_at' => $parameter->getUpdatedAt(),
+            ];
+        }
+        return $parametersArray;
+    }
 }

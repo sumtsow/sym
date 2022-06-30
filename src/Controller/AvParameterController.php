@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,10 +23,24 @@ class AvParameterController extends AbstractController
      */
     public function index(ManagerRegistry $doctrine): Response
     {
-        $repository = $doctrine->getRepository(AvParameter::class);
         return $this->render('av_parameter/index.html.twig', [
-            'av_parameters' => $repository->findAll(),
+            'types' => $doctrine->getRepository(Type::class)->findAll(),
         ]);
+    }
+
+    /**
+     * @Route("/api/av_parameter/{id?}", name="app_api_av_parameter")
+     */
+    public function list(ManagerRegistry $doctrine, $id = 0): JsonResponse
+    {
+        $id = intval($id);
+        if ($id) {
+          $devices = $doctrine->getRepository(Type::class)->find($id);
+          $avParameters = $devices ? $devices->getAvParameters() : [];
+        } else {
+          $avParameters = $doctrine->getRepository(AvParameter::class)->findAll();
+        }
+        return $this->json(['rows' => AvParameter::toArray($avParameters)]);
     }
 
     /**

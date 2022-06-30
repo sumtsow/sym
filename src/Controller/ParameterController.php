@@ -6,6 +6,7 @@ use App\Entity\AvParameter;
 use App\Entity\Device;
 use App\Entity\Parameter;
 use App\Entity\ParamOption;
+use App\Entity\Type;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -63,6 +65,7 @@ class ParameterController extends AbstractController
         }
         return $this->renderForm('parameter/parameter_form.html.twig', [
             'parameterForm' => $form,
+            'types' => $entityManager->getRepository(Type::class)->findAll(),
         ]);
     }
 
@@ -76,13 +79,22 @@ class ParameterController extends AbstractController
         $form = $this->form($parameter, $entityManager);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-          $parameter->setUpdatedAt();
-          $entityManager->persist($parameter);
-          $entityManager->flush();
-          return $this->redirectToRoute('app_admin_parameter');
+          $prioExists = !!$entityManager->getRepository(Parameter::class)->findOneBy([
+              'prio' => $parameter->getPrio(),
+              'device' => $parameter->getDevice()
+              ]);
+          if (!$prioExists) {
+            $parameter->setUpdatedAt();
+            $entityManager->persist($parameter);
+            $entityManager->flush();
+            return $this->redirectToRoute('app_admin_parameter');
+          }
+          $error = new FormError('This prio is used');
+          $form->addError($error);
         }
         return $this->renderForm('parameter/parameter_form.html.twig', [
             'parameterForm' => $form,
+            'types' => $entityManager->getRepository(Type::class)->findAll(),
         ]);
     }
 

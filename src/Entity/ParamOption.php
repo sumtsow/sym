@@ -96,4 +96,20 @@ class ParamOption
 
         return $this;
     }
+
+    public static function toArray($options): array
+    {
+        if (!count($options)) return [];
+        $optionsArray = [];
+        foreach($options as $option) {
+            $optionsArray[$option->getId()] = [
+                'id' => $option->getId(),
+                'av_parameter' => $option->getAvParameter()->getName(),
+                'value' => $option->getValue(),
+                'created_at' => $option->getCreatedAt(),
+                'updated_at' => $option->getUpdatedAt(),
+            ];
+        }
+        return $optionsArray;
+    }
 }

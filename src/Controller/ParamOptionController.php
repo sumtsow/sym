@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,8 +25,23 @@ class ParamOptionController extends AbstractController
     public function index(ManagerRegistry $doctrine): Response
     {
         return $this->render('param_option/index.html.twig', [
-            'param_options' => $doctrine->getRepository(ParamOption::class)->findAll(),
+            'av_parameters' => $doctrine->getRepository(AvParameter::class)->findAll(),
         ]);
+    }
+
+    /**
+     * @Route("/api/param_option/{id?}", name="app_api_param_option")
+     */
+    public function list(ManagerRegistry $doctrine, $id = 0): JsonResponse
+    {
+        $id = intval($id);
+        if ($id) {
+          $avParameter = $doctrine->getRepository(AvParameter::class)->find($id);
+          $options = $avParameter ? $avParameter->getParamOptions() : [];
+        } else {
+          $options = $doctrine->getRepository(ParamOption::class)->findAll();
+        }
+        return $this->json(['rows' => ParamOption::toArray($options)]);
     }
 
     /**

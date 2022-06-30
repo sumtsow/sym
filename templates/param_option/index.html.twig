@@ -3,43 +3,30 @@
 {% block title %}Parameter possible options list{% endblock %}
 
 {% block body %}
-<h1>Available parameters list</h1>
-<p><a class="btn btn-primary" role="button" href="{{ path('app_admin_param_option_create') }}">Add new</a></p>
-<table class="table table-responsive table-striped">
-  <thead>
-    <tr>
-      <th>id</th>
-      <th>av_parameter</th>
-      <th>value</th>
-      <th>created_at</th>
-      <th>updated_at</th>
-      <th colspan="2">Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-  {% for param_option in param_options %}
-    <tr>
-      <td>{{ param_option.getId() }}</td>
-      <td>{{ param_option.getAvParameter().getName() }}</td>
-      <td>{{ param_option.getValue() }}</td>
-      <td>{{ param_option.getCreatedAt().format('H:i:s d.m.Y') }}</td>
-      <td>{{ param_option.getUpdatedAt().format('H:i:s d.m.Y') }}</td>
-      <td><a class="btn btn-outline-primary" href="{{ path('app_admin_param_option_edit', {id: param_option.getId()}) }}">Edit</a></td>
-      <td><a class="btn btn-outline-danger btn-del" id="btn-{{ param_option.getId() }}" href="{{ path('app_admin_param_option_destroy', {id: param_option.getId()}) }}">Delete</a></td>
-    </tr>
-  {% endfor %}
-  </tbody>
-</table>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.btn-del').forEach(function(btn) {
-      btn.addEventListener('click', function(e) {
-        if (!window.confirm('Are you sure to delete parameter option item with id: ' + btn.id.split('-')[1] + '?')) {
-          e.preventDefault();
-          e.stopPropagation();
-        }
-      });
-    });     
-  });
-</script>
+<div data-controller="admin-index">
+  <h1>Parameter options list</h1>
+  <p>
+    <label for="select-parameter">Parameter</label>
+    <select id="select-parameter" data-admin-index-target="select" data-action="click->admin-index#change">
+      <option value="0" selected="selected">All</option>
+      {% for av_parameter in av_parameters %}
+      <option value="{{ av_parameter.getId() }}">{{ av_parameter.getName() }}</option>
+      {% endfor %}
+    </select>
+  </p>
+  <p><a class="btn btn-primary" role="button" href="{{ path('app_admin_param_option_create') }}">Add new</a></p>
+  <table class="table table-responsive table-striped">
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>av_parameter</th>
+        <th>value</th>
+        <th>created_at</th>
+        <th>updated_at</th>
+        <th colspan="2">Actions</th>
+      </tr>
+    </thead>
+    <tbody data-admin-index-target="rows" data-path="param_option"></tbody>
+  </table>
+</div>
 {% endblock %}

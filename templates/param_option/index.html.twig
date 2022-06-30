@@ -7,7 +7,7 @@
   <h1>Parameter options list</h1>
   <p>
     <label for="select-parameter">Parameter</label>
-    <select id="select-parameter" data-admin-index-target="select" data-action="click->admin-index#change">
+    <select id="select-parameter" data-admin-index-target="select" data-action="change->admin-index#change">
       <option value="0" selected="selected">All</option>
       {% for av_parameter in av_parameters %}
       <option value="{{ av_parameter.getId() }}">{{ av_parameter.getName() }}</option>

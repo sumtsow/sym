@@ -3,6 +3,17 @@
 {% block title %}Edit parameter option{% endblock %}
 
 {% block body %}
-  <h1>Edit parameter option</h1>
+<div data-controller="admin-show">
+  <h1>Edit parameter</h1>
+  <p>
+    <label for="select-device">Device</label>
+    <select id="select-device" data-admin-show-target="select" data-action="change->admin-show#change">
+      <option value="0" selected="selected">All</option>
+      {% for device in devices %}
+      <option value="{{ device.getId() }}">{{ device.getName() }}</option>
+      {% endfor %}
+    </select>
+  </p>
   {{ form(parameterForm) }}
+</div>
 {% endblock %}

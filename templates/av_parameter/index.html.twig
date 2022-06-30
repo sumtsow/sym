@@ -7,7 +7,7 @@
   <h1>Available parameters list</h1>
   <p>
     <label for="select-type">Type</label>
-    <select id="select-type" data-admin-index-target="select" data-action="click->admin-index#change">
+    <select id="select-type" data-admin-index-target="select" data-action="change->admin-index#change">
       <option value="0" selected="selected">All</option>
       {% for type in types %}
       <option value="{{ type.getId() }}">{{ type.getName() }}</option>

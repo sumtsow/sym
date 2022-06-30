@@ -99,15 +99,15 @@ class AvParameterController extends AbstractController
     {
         $types = $entityManager->getRepository(Type::class)->findAll();
         $form = $this->createFormBuilder($avParameter)
-            ->add('name', TextType::class, [
-                'attr' => ['class' => 'form-control'],
-            ])
             ->add('type', ChoiceType::class, [
                 'attr' => ['class' => 'form-select'],
                 'choices'  => $types,
                 'choice_label' => function(?Type $type) {
                     return $type ? $type->getName() : '';
                 },
+            ])
+            ->add('name', TextType::class, [
+                'attr' => ['class' => 'form-control'],
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'Save',

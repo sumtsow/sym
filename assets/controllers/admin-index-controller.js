@@ -5,6 +5,7 @@ export default class extends Controller {
 
     connect() {
       this.change();
+      window.deleteRow = this.delete;
     }
 
     change() {
@@ -33,7 +34,8 @@ export default class extends Controller {
             btnEdit.setAttribute('href', '/admin/' + path + '/edit/' + id);
             row.append(btnEditRow.cloneNode(true));
             btnDel.setAttribute('href', '/admin/' + path + '/' + id);
-            btnDel.setAttribute('data-action', 'click->admin-index#delete');
+            //btnDel.setAttribute('data-action', 'click->admin-index#delete');
+            btnDel.setAttribute('onclick', 'window.deleteRow(' + id + ');');
             btnDel.setAttribute('data-item-id-param', id);
             btnDel.setAttribute('data-admin-index-target', 'del');
             row.append(btnDelRow.cloneNode(true));
@@ -42,11 +44,11 @@ export default class extends Controller {
         });
     }
 
-    delete(event) {
-      console.log(event.params.id);
-      if (!window.confirm('Are you sure to delete device item with id: ' + event.params.id + '?')) {
+    delete(id) {
+      console.log(id);
+      if (!window.confirm('Are you sure to delete device item with id: ' + id + '?')) {
         event.preventDefault();
         event.stopPropagation();
       }
     }
-}
+};

@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -25,10 +26,24 @@ class ParameterController extends AbstractController
      */
     public function index(ManagerRegistry $doctrine): Response
     {
-        $repository = $doctrine->getRepository(Parameter::class);
         return $this->render('parameter/index.html.twig', [
-            'parameters' => $repository->findAll(),
+            'devices' => $doctrine->getRepository(Device::class)->findAll(),
         ]);
+    }
+
+    /**
+     * @Route("/api/parameter/{id?}", name="app_api_parameter")
+     */
+    public function list(ManagerRegistry $doctrine, $id = 0): JsonResponse
+    {
+        $id = intval($id);
+        if ($id) {
+          $devices = $doctrine->getRepository(Device::class)->find($id);
+          $parameters = $devices ? $devices->getParameters() : [];
+        } else {
+          $parameters = $doctrine->getRepository(Parameter::class)->findAll();
+        }
+        return $this->json(['rows' => Parameter::toArray($parameters)]);
     }
 
     /**

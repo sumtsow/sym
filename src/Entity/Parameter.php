@@ -148,4 +148,23 @@ class Parameter
 
         return $this;
     }
+
+    public static function toArray($parameters): array
+    {
+        if (!count($parameters)) return [];
+        $parametersArray = [];
+        foreach($parameters as $parameter) {
+            $parametersArray[$parameter->getId()] = [
+                'id' => $parameter->getId(),
+                'device' => $parameter->getDevice()->getName(),
+                'prio' => $parameter->getPrio(),
+                'avParameter' => $parameter->getAvParameter()->getName(),
+                'value' => $parameter->getValue() ? $parameter->getValue()->getValue() : '',
+                'customValue' => $parameter->getCustomValue(),
+                'created_at' => $parameter->getCreatedAt(),
+                'updated_at' => $parameter->getUpdatedAt(),
+            ];
+        }
+        return $parametersArray;
+    }
 }

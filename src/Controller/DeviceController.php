@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,10 +24,19 @@ class DeviceController extends AbstractController
      */
     public function index(ManagerRegistry $doctrine): Response
     {
-        $repository = $doctrine->getRepository(Device::class);
         return $this->render('device/index.html.twig', [
-            'devices' => $repository->findAll(),
+            'types' => $doctrine->getRepository(Type::class)->findAll(),
         ]);
+    }
+
+    /**
+     * @Route("/api/device/{id?}", name="app_api_device")
+     */
+    public function list(ManagerRegistry $doctrine, $id = 0): JsonResponse
+    {
+        $id = intval($id);
+        $devices = $id ? $doctrine->getRepository(Type::class)->find($id)->getDevices() : $doctrine->getRepository(Device::class)->findAll();
+        return $this->json(['rows' => Device::toArray($devices)]);
     }
 
     /**

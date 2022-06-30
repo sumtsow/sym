@@ -157,4 +157,21 @@ class Device
 
         return $this;
     }
+
+    public static function toArray($devices): array
+    {
+        if (!count($devices)) return [];
+        $devicesArray = [];
+        foreach($devices as $device) {
+            $devicesArray[$device->getId()] = [
+                'id' => $device->getId(),
+                'name' => $device->getName(),
+                'type' => $device->getType()->getName(),
+                'vendor' => $device->getVendor()->getName(),
+                'created_at' => $device->getCreatedAt(),
+                'updated_at' => $device->getUpdatedAt(),
+            ];
+        }
+        return $devicesArray;
+    }
 }

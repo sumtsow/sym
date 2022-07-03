@@ -1,17 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}{{ 'Home'|trans }}{% endblock %}
 
 {% block body %}
-<h1>Home page</h1>
-<h2>Edit</h2>
+<h1>{{ 'Home'|trans }} {{ 'page'|trans }}</h1>
+<h2>{{ 'Edit'|trans }}</h2>
 <ul>
-  <li><a href="{{ path('app_admin_device') }}">Devices</a></li>
-  <li><a href="{{ path('app_admin_parameter') }}">Parameters</a></li>
-  <li><a href="{{ path('app_admin_av_parameter') }}">Available parameters</a></li>
-  <li><a href="{{ path('app_admin_param_option') }}">Parameter Options</a></li>
-  <li><a href="{{ path('app_admin_type') }}">Types</a></li>
-  <li><a href="{{ path('app_admin_vendor') }}">Vendors</a></li>
-  <li><a href="{{ path('app_admin_country') }}">Countries</a></li>
+  <li><a href="{{ path('app_admin_device') }}">{{ 'Devices'|trans }}</a></li>
+  <li><a href="{{ path('app_admin_parameter') }}">{{ 'Parameters'|trans }}</a></li>
+  <li><a href="{{ path('app_admin_av_parameter') }}">{{ 'Available parameters'|trans }}</a></li>
+  <li><a href="{{ path('app_admin_param_option') }}">{{ 'Parameter Options'|trans }}</a></li>
+  <li><a href="{{ path('app_admin_type') }}">{{ 'Types'|trans }}</a></li>
+  <li><a href="{{ path('app_admin_vendor') }}">{{ 'Vendors'|trans }}</a></li>
+  <li><a href="{{ path('app_admin_country') }}">{{ 'Countries'|trans }}</a></li>
 </ul>
 {% endblock %}

@@ -1,21 +1,23 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}{{ 'Login'|trans }}{% endblock %}
+
 {% block body %}
     {% if error %}
         <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
 
     <form class="mx-auto login-form" action="{{ path('app_login') }}" method="post">
-        <label for="username">Email:</label>
+        <label for="username">{{ 'Email'|trans }}</label>
         <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}"/>
 
-        <label for="password">Password:</label>
+        <label for="password">{{ 'Password'|trans }}</label>
         <input class="form-control" type="password" id="password" name="_password"/>
 
         {# If you want to control the URL the user is redirected to on success
         <input type="hidden" name="_target_path" value="/account"/> #}
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-        <button class="btn btn-primary mt-3 me-3" type="submit">login</button>
-        <a class="btn btn-outline-primary mt-3 ms-5" href="{{ path('app_register') }}">Not yet registered?</a>
+        <button class="btn btn-primary mt-3 me-2" type="submit">{{ 'Login'|trans }}</button>
+        <a class="btn btn-outline-primary mt-3 ms-3" href="{{ path('app_register') }}">{{ 'Not yet registered'|trans }}?</a>
     </form>
 {% endblock %}

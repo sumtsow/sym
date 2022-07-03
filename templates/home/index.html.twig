@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}{{ 'Home'|trans }}{% endblock %}
 
 {% block body %}
-<h1>Home page</h1>
-<h2>Tools</h2>
+<h1>{{ 'Home'|trans }} {{ 'page'|trans }}</h1>
+<h2>{{ 'Tools'|trans }}</h2>
 <ul>
-  <li><a href="{{ path('app_admin') }}">Admin Tools</a></li>
-  <li><a href="{{ path('app_profile') }}">User's Profile</a></li>
+  <li><a href="{{ path('app_admin') }}">{{ 'Admin Tools'|trans }}</a></li>
+  <li><a href="{{ path('app_profile') }}">{{ 'User&amp;s Profile'|trans }}</a></li>
 </ul>
 {% endblock %}

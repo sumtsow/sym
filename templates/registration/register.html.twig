@@ -1,37 +1,39 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}{{ 'Register'|trans }}{% endblock %}
 
 {% block body %}
     {% for flash_error in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
 
-    <h1>Register</h1>
+    <h1>{{ 'Register'|trans }}</h1>
 
     {{ form_start(registrationForm, {
         attr: {class: 'mx-auto login-form'}
       }) }}
         {{ form_row(registrationForm.email, {
+          label: 'Email'|trans,
           attr: {class: 'form-control'}
         }) }}
         {{ form_row(registrationForm.plainPassword, {
-            label: 'Password',
+            label: 'Password'|trans,
             attr: {class: 'form-control'}
         }) }}
         {{ form_row(registrationForm.lastname, {
-            label: 'Lastname',
+            label: 'Lastname'|trans,
             attr: {class: 'form-control'}
         }) }}
         {{ form_row(registrationForm.firstname, {
-            label: 'Firstname',
+            label: 'Firstname'|trans,
             attr: {class: 'form-control mb-3'}
         }) }}
         {{ form_row(registrationForm.agreeTerms, {
+          label: 'Agree terms'|trans,
           attr: {class: 'form-check-input ms-2'}
         }) }}
 
-        <button type="submit" class="btn btn-primary mt-3 me-3">Register</button>
-        <a class="btn btn-outline-primary mt-3 ms-4" href="{{ path('app_login') }}">Already registered?</a>
+        <button type="submit" class="btn btn-primary mt-3 me-1">{{ 'Register'|trans }}</button>
+        <a class="btn btn-outline-primary mt-3 ms-2" href="{{ path('app_login') }}">{{ 'Already registered'|trans }}?</a>
     {{ form_end(registrationForm) }}
 {% endblock %}

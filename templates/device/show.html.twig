@@ -1,24 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Main{% endblock %}
+{% block title %}{{ 'Device'|trans }}{% endblock %}
 
 {% block body %}
 <h1>{{ device.name }}</h1>
-<h4>Parameters</h4>
+<h4>{{ 'Parameters'|trans }}</h4>
 <table class="table table-responsive table-striped">
   <thead>
     <tr>
-      <th>Parameter</th>
-      <th>Value</th>
+      <th>{{ 'Parameter'|trans }}</th>
+      <th>{{ 'Value'|trans }}</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>Type</th>
+      <th>{{ 'Type'|trans }}</th>
       <td>{{ device.getType().getName() }}</td>
     </tr>
     <tr>
-      <th>Vendor</th>
+      <th>{{ 'Vendor'|trans }}</th>
       <td>{{ device.getVendor().getName() }}</td>
     </tr>
   {% for parameter in device.getParameters() %}

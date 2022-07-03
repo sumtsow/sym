@@ -6,6 +6,7 @@ export default class extends Controller {
     connect() {
       this.change();
       window.deleteRow = this.delete;
+      this.langEn = document.querySelector('html').getAttribute('lang') == 'en';
     }
 
     change() {
@@ -17,12 +18,12 @@ export default class extends Controller {
           let btnEditRow = document.createElement('td'),
               btnEdit = document.createElement('a');
           btnEdit.setAttribute('class', 'btn btn-outline-primary');
-          btnEdit.innerText = 'Edit';
+          btnEdit.innerText = this.langEn ? 'Edit' : 'Редагувати';
           btnEditRow.append(btnEdit);
           let btnDelRow = document.createElement('td'),
               btnDel = document.createElement('a');
           btnDel.setAttribute('class', 'btn btn-outline-danger btn-del');
-          btnDel.innerText = 'Delete';
+          btnDel.innerText = this.langEn ? 'Delete' : 'Видалити';
           btnDelRow.append(btnDel);
           for (let id in json.rows) {
             let row = document.createElement('tr');

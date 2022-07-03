@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="{% block locale %}{{ app.request.locale }}{% endblock %}">
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}{% endblock %}</title>

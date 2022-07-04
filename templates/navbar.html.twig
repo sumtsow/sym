@@ -18,8 +18,8 @@
       {% else %}
         <li class="nav-item"><a class="nav-link" href="{{ url('app_login') }}">{{ 'Login'|trans }}</a></li>
       {% endif %}
-      <li class="nav-item"><a class="nav-link" href="{{ path('app_locale', {_locale: 'en'}) }}">En</a></li>
-      <li class="nav-item"><a class="nav-link" href="{{ path('app_locale', {_locale: 'uk'}) }}">Uk</a></li>
+      <li class="nav-item"><a class="nav-link{% if app.request.getLocale() == 'en' %} active{% endif %}" href="{{ path('app_locale', {_locale: 'en'}) }}">En</a></li>
+      <li class="nav-item"><a class="nav-link{% if app.request.getLocale() != 'en' %} active{% endif %}" href="{{ path('app_locale', {_locale: 'uk'}) }}">Uk</a></li>
       </ul>
     </div>
   </div>

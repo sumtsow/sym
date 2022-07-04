@@ -62,6 +62,7 @@ class DefaultController extends AbstractController
     public function locale(Request $request, $_locale): Response
     {
         $request->setLocale($_locale);
+        $request->getSession()->set('_locale', $_locale);
         return $this->redirect($request->server->get('HTTP_REFERER'));
     }
 }

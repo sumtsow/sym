@@ -53,7 +53,7 @@ class TypeController extends AbstractController
     {
         $entityManager = $doctrine->getManager();
         $type = $entityManager->getRepository(Type::class)->find($id);
-        $form = $this->form(type);
+        $form = $this->form($type);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
           $type->setUpdatedAt();

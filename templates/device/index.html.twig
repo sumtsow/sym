@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Device list{% endblock %}
+{% block title %}{{ 'Device list'|trans }}{% endblock %}
 
 {% block body %}
 <div data-controller="admin-index">
@@ -24,7 +24,7 @@
         <th>vendor</th>
         <th>created_at</th>
         <th>updated_at</th>
-        <th colspan="2">Actions</th>
+        <th colspan="2">{{ 'Actions'|trans }}</th>
       </tr>
     </thead>
     <tbody data-admin-index-target="rows" data-path="device"></tbody>

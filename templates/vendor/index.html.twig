@@ -1,45 +1,35 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Vendor list{% endblock %}
+{% block title %}{{ 'Vendor list'|trans }}{% endblock %}
 
 {% block body %}
-<h1>Country list</h1>
-<p><a class="btn btn-primary" role="button" href="{{ path('app_admin_vendor_create') }}">Add new</a></p>
-<table class="table table-responsive table-striped">
-  <thead>
-    <tr>
-      <th>id</th>
-      <th>name</th>
-      <th>country</th>
-      <th>created_at</th>
-      <th>updated_at</th>
-      <th colspan="2">Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-  {% for vendor in vendors %}
-    <tr>
-      <td>{{ vendor.getId() }}</td>
-      <td>{{ vendor.getName() }}</td>
-      <td>{{ vendor.getCountry().getName() }}</td>
-      <td>{{ vendor.getCreatedAt().format('H:i:s d.m.Y') }}</td>
-      <td>{{ vendor.getUpdatedAt().format('H:i:s d.m.Y') }}</td>
-      <td><a class="btn btn-outline-primary" href="{{ path('app_admin_vendor_edit', {id: vendor.getId()}) }}">Edit</a></td>
-      <td><a class="btn btn-outline-danger btn-del" id="btn-{{ vendor.getId() }}" href="{{ path('app_admin_vendor_destroy', {id: vendor.getId()}) }}">Delete</a></td>
-    </tr>
-  {% endfor %}
-  </tbody>
-</table>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.btn-del').forEach(function(btn) {
-      btn.addEventListener('click', function(e) {
-        if (!window.confirm('Are you sure to delete vendor item with id: ' + btn.id.split('-')[1] + '?')) {
-          e.preventDefault();
-          e.stopPropagation();
-        }
-      });
-    });     
-  });
-</script>
+<div data-controller="admin-index">
+  <h1>{{ 'Vendor list'|trans }}</h1>
+  <p><a class="btn btn-primary" role="button" href="{{ path('app_admin_vendor_create') }}">{{ 'Add new'|trans }}</a></p>
+  <table class="table table-responsive table-striped">
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>country</th>
+        <th>created_at</th>
+        <th>updated_at</th>
+        <th colspan="2">{{ 'Actions'|trans }}</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for vendor in vendors %}
+      <tr>
+        <td>{{ vendor.getId() }}</td>
+        <td>{{ vendor.getName() }}</td>
+        <td>{{ vendor.getCountry().getName() }}</td>
+        <td>{{ vendor.getCreatedAt().format('H:i:s d.m.Y') }}</td>
+        <td>{{ vendor.getUpdatedAt().format('H:i:s d.m.Y') }}</td>
+        <td><a class="btn btn-outline-primary" href="{{ path('app_admin_vendor_edit', {id: vendor.getId()}) }}">{{ 'Edit'|trans }}</a></td>
+        <td><a class="btn btn-outline-danger btn-del" data-item-id-param="{{ vendor.getId() }}" onclick="window.deleteRow({{ vendor.getId() }});" href="{{ path('app_admin_vendor_destroy', {id: vendor.getId()}) }}">{{ 'Delete'|trans }}</a></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
 {% endblock %}

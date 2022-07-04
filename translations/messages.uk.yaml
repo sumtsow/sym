@@ -1,12 +1,20 @@
+Two-letter code: Двохлітерний код
+Three-letter code: Трилітерний код
+Actions: Дії
 Add new: Додати новий
 Admin Tools: Адміністративні інструменти
 Agree terms: Прийняти умови
 All: Всі
 Already registered: Вже зареєстровані
 address by clicking the following link: ", перейшовши за вказаним посиланням"
+Available parameter: Доступна характеристика
+Available parameters list: Список доступних характеристик
 Available parameters: Доступні характеристики
 Cheers: Підтверджено
+Code: Код
 Confirm my Email: Підтвердити мою пошту
+Country: Країна
+Country list: Список країн
 Countries: Країни
 Delete: Видалити
 Device: Пристрій
@@ -25,7 +33,9 @@ Name: Назва
 Not yet registered: Ще не зареєстровані
 page: сторінка
 Parameter: Характеристика
+Parameter list: Список характеристик
 Parameter Options: Значення характеристик
+Parameter options list: Список значень характеристик
 Parameters: Характеристики
 Password: Пароль
 Please confirm your email: Будь ласка, підтвердіть вашу електронну пошту
@@ -34,8 +44,10 @@ Save: Зберегти
 This link will expire in: Це посилання дійсне до
 Tools: Інструменти
 Type: Тип
+Type list: Список типів
 Types: Типи
-User&amp;s Profile: Профіль користувача
+User Profile: Профіль користувача
 Value: Значення
 Vendor: Виробник
+Vendor list: Список виробників
 Vendors: Виробники

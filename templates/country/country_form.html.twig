@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit country{% endblock %}
+{% block title %}{{ 'Edit'|trans }} {{ 'Country'|trans }}{% endblock %}
 
 {% block body %}
-  <h1>Edit country</h1>
+  <h1>{{ 'Edit'|trans }} {{ 'Country'|trans }}</h1>
   {{ form(countryForm) }}
 {% endblock %}

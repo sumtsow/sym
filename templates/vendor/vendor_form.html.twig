@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit vendor{% endblock %}
+{% block title %}{{ 'Edit'|trans }} {{ 'Vendor'|trans }}{% endblock %}
 
 {% block body %}
-  <h1>Edit vendor</h1>
+  <h1>{{ 'Edit'|trans }} {{ 'Vendor'|trans }}</h1>
   {{ form(vendorForm) }}
 {% endblock %}

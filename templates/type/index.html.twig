@@ -1,43 +1,33 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Type list{% endblock %}
+{% block title %}{{ 'Type list'|trans }}{% endblock %}
 
 {% block body %}
-<h1>Country list</h1>
-<p><a class="btn btn-primary" role="button" href="{{ path('app_admin_type_create') }}">Add new</a></p>
-<table class="table table-responsive table-striped">
-  <thead>
-    <tr>
-      <th>id</th>
-      <th>name</th>
-      <th>created_at</th>
-      <th>updated_at</th>
-      <th colspan="2">Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-  {% for type in types %}
-    <tr>
-      <td>{{ type.getId() }}</td>
-      <td>{{ type.getName() }}</td>
-      <td>{{ type.getCreatedAt().format('H:i:s d.m.Y') }}</td>
-      <td>{{ type.getUpdatedAt().format('H:i:s d.m.Y') }}</td>
-      <td><a class="btn btn-outline-primary" href="{{ path('app_admin_type_edit', {id: type.getId()}) }}">Edit</a></td>
-      <td><a class="btn btn-outline-danger btn-del" id="btn-{{ type.getId() }}" href="{{ path('app_admin_type_destroy', {id: type.getId()}) }}">Delete</a></td>
-    </tr>
-  {% endfor %}
-  </tbody>
-</table>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.btn-del').forEach(function(btn) {
-      btn.addEventListener('click', function(e) {
-        if (!window.confirm('Are you sure to delete type item with id: ' + btn.id.split('-')[1] + '?')) {
-          e.preventDefault();
-          e.stopPropagation();
-        }
-      });
-    });     
-  });
-</script>
+<div data-controller="admin-index">
+  <h1>{{ 'Type list'|trans }}</h1>
+  <p><a class="btn btn-primary" role="button" href="{{ path('app_admin_type_create') }}">{{ 'Add new'|trans }}</a></p>
+  <table class="table table-responsive table-striped">
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>created_at</th>
+        <th>updated_at</th>
+        <th colspan="2">{{ 'Actions'|trans }}</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for type in types %}
+      <tr>
+        <td>{{ type.getId() }}</td>
+        <td>{{ type.getName() }}</td>
+        <td>{{ type.getCreatedAt().format('H:i:s d.m.Y') }}</td>
+        <td>{{ type.getUpdatedAt().format('H:i:s d.m.Y') }}</td>
+        <td><a class="btn btn-outline-primary" href="{{ path('app_admin_type_edit', {id: type.getId()}) }}">{{ 'Edit'|trans }}</a></td>
+        <td><a class="btn btn-outline-danger btn-del" data-item-id-param="{{ type.getId() }}" onclick="window.deleteRow({{ type.getId() }});" href="{{ path('app_admin_type_destroy', {id: type.getId()}) }}">{{ 'Delete'|trans }}</a></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
 {% endblock %}

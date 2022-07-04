@@ -1,20 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Parameter possible options list{% endblock %}
+{% block title %}{{ 'Parameter options list'|trans }}{% endblock %}
 
 {% block body %}
 <div data-controller="admin-index">
-  <h1>Parameter options list</h1>
+  <h1>{{ 'Parameter options list'|trans }}</h1>
   <p>
-    <label for="select-parameter">Parameter</label>
+    <label for="select-parameter">{{ 'Parameter'|trans }}</label>
     <select id="select-parameter" data-admin-index-target="select" data-action="change->admin-index#change">
-      <option value="0" selected="selected">All</option>
+      <option value="0" selected="selected">{{ 'All'|trans }}</option>
       {% for av_parameter in av_parameters %}
       <option value="{{ av_parameter.getId() }}">{{ av_parameter.getName() }}</option>
       {% endfor %}
     </select>
   </p>
-  <p><a class="btn btn-primary" role="button" href="{{ path('app_admin_param_option_create') }}">Add new</a></p>
+  <p><a class="btn btn-primary" role="button" href="{{ path('app_admin_param_option_create') }}">{{ 'Add new'|trans }}</a></p>
   <table class="table table-responsive table-striped">
     <thead>
       <tr>
@@ -23,7 +23,7 @@
         <th>value</th>
         <th>created_at</th>
         <th>updated_at</th>
-        <th colspan="2">Actions</th>
+        <th colspan="2">{{ 'Actions'|trans }}</th>
       </tr>
     </thead>
     <tbody data-admin-index-target="rows" data-path="param_option"></tbody>

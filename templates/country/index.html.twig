@@ -1,49 +1,39 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Country list{% endblock %}
+{% block title %}{{ 'Country list'|trans }}{% endblock %}
 
 {% block body %}
-<h1>Country list</h1>
-<p><a class="btn btn-primary" role="button" href="{{ path('app_admin_country_create') }}">Add new</a></p>
-<table class="table table-responsive table-striped">
-  <thead>
-    <tr>
-      <th>id</th>
-      <th>name</th>
-      <th>abbr2</th>
-      <th>abbr3</th>
-      <th>code</th>
-      <th>created_at</th>
-      <th>updated_at</th>
-      <th colspan="2">Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-  {% for country in countries %}
-    <tr>
-      <td>{{ country.getId() }}</td>
-      <td>{{ country.getName() }}</td>
-      <td>{{ country.getAbbr2() }}</td>
-      <td>{{ country.getAbbr3() }}</td>
-      <td>{{ country.getCode() }}</td>
-      <td>{{ country.getCreatedAt().format('H:i:s d.m.Y') }}</td>
-      <td>{{ country.getUpdatedAt().format('H:i:s d.m.Y') }}</td>
-      <td><a class="btn btn-outline-primary" href="{{ path('app_admin_country_edit', {id: country.getId()}) }}">Edit</a></td>
-      <td><a class="btn btn-outline-danger btn-del" id="btn-{{ country.getId() }}" href="{{ path('app_admin_country_destroy', {id: country.getId()}) }}">Delete</a></td>
-    </tr>
-  {% endfor %}
-  </tbody>
-</table>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.btn-del').forEach(function(btn) {
-      btn.addEventListener('click', function(e) {
-        if (!window.confirm('Are you sure to delete country item with id: ' + btn.id.split('-')[1] + '?')) {
-          e.preventDefault();
-          e.stopPropagation();
-        }
-      });
-    });     
-  });
-</script>
+<div data-controller="admin-index">
+  <h1>{{ 'Country list'|trans }}</h1>
+  <p><a class="btn btn-primary" role="button" href="{{ path('app_admin_country_create') }}">{{ 'Add new'|trans }}</a></p>
+  <table class="table table-responsive table-striped">
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>abbr2</th>
+        <th>abbr3</th>
+        <th>code</th>
+        <th>created_at</th>
+        <th>updated_at</th>
+        <th colspan="2">{{ 'Actions'|trans }}</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for country in countries %}
+      <tr>
+        <td>{{ country.getId() }}</td>
+        <td>{{ country.getName() }}</td>
+        <td>{{ country.getAbbr2() }}</td>
+        <td>{{ country.getAbbr3() }}</td>
+        <td>{{ country.getCode() }}</td>
+        <td>{{ country.getCreatedAt().format('H:i:s d.m.Y') }}</td>
+        <td>{{ country.getUpdatedAt().format('H:i:s d.m.Y') }}</td>
+        <td><a class="btn btn-outline-primary" href="{{ path('app_admin_country_edit', {id: country.getId()}) }}">{{ 'Edit'|trans }}</a></td>
+        <td><a class="btn btn-outline-danger btn-del" data-item-id-param="{{ country.getId() }}" onclick="window.deleteRow({{ country.getId() }});" href="{{ path('app_admin_country_destroy', {id: country.getId()}) }}">{{ 'Delete'|trans }}</a></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
 {% endblock %}

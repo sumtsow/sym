@@ -4,9 +4,9 @@ export default class extends Controller {
     static targets = ['select', 'rows', 'del'];
 
     connect() {
-      this.change();
       window.deleteRow = this.delete;
-      this.langEn = document.querySelector('html').getAttribute('lang') == 'en';
+      window.isEn = document.querySelector('html').getAttribute('lang') == 'en';
+      if (this.selectTargets.length && this.rowsTargets.length) this.change();
     }
 
     change() {
@@ -18,12 +18,12 @@ export default class extends Controller {
           let btnEditRow = document.createElement('td'),
               btnEdit = document.createElement('a');
           btnEdit.setAttribute('class', 'btn btn-outline-primary');
-          btnEdit.innerText = this.langEn ? 'Edit' : 'Редагувати';
+          btnEdit.innerText = window.isEn ? 'Edit' : 'Редагувати';
           btnEditRow.append(btnEdit);
           let btnDelRow = document.createElement('td'),
               btnDel = document.createElement('a');
           btnDel.setAttribute('class', 'btn btn-outline-danger btn-del');
-          btnDel.innerText = this.langEn ? 'Delete' : 'Видалити';
+          btnDel.innerText = window.isEn ? 'Delete' : 'Видалити';
           btnDelRow.append(btnDel);
           for (let id in json.rows) {
             let row = document.createElement('tr');
@@ -35,7 +35,6 @@ export default class extends Controller {
             btnEdit.setAttribute('href', '/admin/' + path + '/edit/' + id);
             row.append(btnEditRow.cloneNode(true));
             btnDel.setAttribute('href', '/admin/' + path + '/' + id);
-            //btnDel.setAttribute('data-action', 'click->admin-index#delete');
             btnDel.setAttribute('onclick', 'window.deleteRow(' + id + ');');
             btnDel.setAttribute('data-item-id-param', id);
             btnDel.setAttribute('data-admin-index-target', 'del');
@@ -46,8 +45,8 @@ export default class extends Controller {
     }
 
     delete(id) {
-      console.log(id);
-      if (!window.confirm('Are you sure to delete device item with id: ' + id + '?')) {
+      let message = window.isEn ? 'Are you sure to delete item item with' : 'Ви дійсно хочете видалити елемент з';
+      if (!window.confirm(message + ' id: ' + id + '?')) {
         event.preventDefault();
         event.stopPropagation();
       }

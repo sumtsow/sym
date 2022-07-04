@@ -3,7 +3,14 @@
 {% block title %}{{ 'Device'|trans }}{% endblock %}
 
 {% block body %}
-<h1>{{ device.getName()[:1]|upper ~ device.getName()[1:] }}</h1>
+<div class="row align-items-center">
+  <div class="col-auto">
+    <img style="max-width: 300px; max-height: 300px;" src="/img/img-{{ device.getId() }}.jpg" alt="{{ device.getName() }} фото">
+  </div>
+  <div class="col">
+    <h1>{{ device.getName()[:1]|upper ~ device.getName()[1:] }}</h1>
+  </div>
+</div>
 <h4>{{ 'Parameters'|trans }}</h4>
 <table class="table table-responsive table-striped">
   <thead>

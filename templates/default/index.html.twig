@@ -8,6 +8,7 @@
   <div class="mt-3">
     <a href="{{ path('app_device_edit', {id: device.getId()})}}">
       <div class="card card-responsive h-100 shadow">
+        <img style="max-width: 200px; max-height: 200px;" src="/img/img-{{ device.getId() }}.jpg" class="card-img-top m-auto mt-3" alt="{{ device.getName() }} фото">
         <div class="card-body pb-1">
           <p class="text-dark">{{ device.getName()[:1]|upper ~ device.getName()[1:] }}</p>
         </div>

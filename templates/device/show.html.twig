@@ -3,7 +3,7 @@
 {% block title %}{{ 'Device'|trans }}{% endblock %}
 
 {% block body %}
-<h1>{{ device.name }}</h1>
+<h1>{{ device.getName()[:1]|upper ~ device.getName()[1:] }}</h1>
 <h4>{{ 'Parameters'|trans }}</h4>
 <table class="table table-responsive table-striped">
   <thead>

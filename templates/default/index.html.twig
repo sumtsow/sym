@@ -9,7 +9,7 @@
     <a href="{{ path('app_device_edit', {id: device.getId()})}}">
       <div class="card card-responsive h-100 shadow">
         <div class="card-body pb-1">
-          <p class="text-dark">{{ device.getName() }}</p>
+          <p class="text-dark">{{ device.getName()[:1]|upper ~ device.getName()[1:] }}</p>
         </div>
       </div>
     </a>

@@ -90,7 +90,7 @@ class ParameterController extends AbstractController
             return $this->redirectToRoute('app_admin_parameter');
           }
           $error = new FormError('This prio is used');
-          $form->addError($error);
+          $form->get('prio')->addError($error);
         }
         return $this->renderForm('parameter/parameter_form.html.twig', [
             'parameterForm' => $form,

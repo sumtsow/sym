@@ -8,6 +8,7 @@ use App\Entity\Vendor;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -21,6 +22,7 @@ use Symfony\Component\Translation\TranslatableMessage;
 
 class DeviceController extends AbstractController
 {
+    private const IMAGE_DIR = '/img/';
     /**
      * @Route("/admin/device", name="app_admin_device")
      */
@@ -49,15 +51,32 @@ class DeviceController extends AbstractController
         $device = new Device();
         $form = self::form($device, $entityManager);
         $form->handleRequest($request);
+        $dir = $this->getParameter('kernel.project_dir').'/public'.self::IMAGE_DIR;
+        $filename = 'img-'.$device->getId().'.jpg';
+        $image = file_exists($dir.$filename) ? self::IMAGE_DIR.$filename : false;
         if ($form->isSubmitted() && $form->isValid()) {
           $device->setCreatedAt();
           $device->setUpdatedAt();
           $entityManager->persist($device);
           $entityManager->flush();
+          $file = $form->get('image')->getData();
+          if ($file) {
+            if ($file->getMimeType() === 'image/jpeg') {
+              $file->move($dir, $filename);
+            } else {
+              $error = new FormError('Bad Mime Type!');
+              $form->get('image')->addError($error);
+              return $this->renderForm('device/device_form.html.twig', [
+                  'deviceForm' => $form,
+                  'image' => $image
+              ]);
+            }
+          }
           return $this->redirectToRoute('app_admin_device');
         }
         return $this->renderForm('device/device_form.html.twig', [
             'deviceForm' => $form,
+            'image' => $image
         ]);
     }
 
@@ -70,22 +89,31 @@ class DeviceController extends AbstractController
         $device = $entityManager->getRepository(Device::class)->find($id);
         $form = $this->form($device, $entityManager);
         $form->handleRequest($request);
+        $dir = $this->getParameter('kernel.project_dir').'/public'.self::IMAGE_DIR;
+        $filename = 'img-'.$device->getId().'.jpg';
+        $image = file_exists($dir.$filename) ? self::IMAGE_DIR.$filename : false;
         if ($form->isSubmitted() && $form->isValid()) {
           $device->setUpdatedAt();
           $entityManager->persist($device);
           $entityManager->flush();
-          $image = $form->get('image');
-          if ($image) {
-            $file = $image->getData();
-            if ($file->getSize() < (20 * 1024 * 1024)) {
-              $directory = $this->getParameter('kernel.project_dir') . '/public/img/';
-              $file->move($directory, 'img-'.$device->getId().'.jpg');
+          $file = $form->get('image')->getData();
+          if ($file) {
+            if ($file->getMimeType() === 'image/jpeg') {
+              $file->move($dir, $filename);
+            } else {
+              $error = new FormError('Bad Mime Type!');
+              $form->get('image')->addError($error);
+              return $this->renderForm('device/device_form.html.twig', [
+                  'deviceForm' => $form,
+                  'image' => $image
+              ]);
             }
           }
           return $this->redirectToRoute('app_admin_device');
         }
         return $this->renderForm('device/device_form.html.twig', [
             'deviceForm' => $form,
+            'image' => $image
         ]);
     }
 

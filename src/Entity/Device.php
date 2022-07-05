@@ -58,16 +58,6 @@ class Device
      */
     private $parameters;
 
-    /**
-     * @Assert\File(
-     *    maxSize = "20Mi",
-     * )
-     * @Assert\Image(
-     *    maxWidth = 300,
-     *    maxHeight = 300,
-     *    mimeTypes = {"image/jpeg"}
-     * )
-     */
     private $image;
 
     public function __construct()

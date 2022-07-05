@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit parameter option{% endblock %}
+{% block title %}{{ 'Edit'|trans }} {{ 'Parameter'|trans }}{% endblock %}
 
 {% block body %}
 <div data-controller="admin-show">
-  <h1>Edit parameter</h1>
+  <h1>{{ 'Edit'|trans }} {{ 'Parameter'|trans }}</h1>
   <!--<p>
     <label for="select-device">Type</label>
     <select id="select-device" data-admin-show-target="select" data-action="change->admin-show#change">

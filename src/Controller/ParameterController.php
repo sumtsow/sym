@@ -80,11 +80,11 @@ class ParameterController extends AbstractController
         $form = $this->form($parameter, $entityManager);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-          $prioExists = !!$entityManager->getRepository(Parameter::class)->findOneBy([
+          $prioExists = $entityManager->getRepository(Parameter::class)->findOneBy([
               'prio' => $parameter->getPrio(),
               'device' => $parameter->getDevice()
               ]);
-          if (!$prioExists) {
+          if (!$prioExists || $prioExists->getId() === $parameter->getId()) {
             $parameter->setUpdatedAt();
             $entityManager->persist($parameter);
             $entityManager->flush();

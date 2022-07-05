@@ -58,6 +58,18 @@ class Device
      */
     private $parameters;
 
+    /**
+     * @Assert\File(
+     *    maxSize = "20Mi",
+     * )
+     * @Assert\Image(
+     *    maxWidth = 300,
+     *    maxHeight = 300,
+     *    mimeTypes = {"image/jpeg"}
+     * )
+     */
+    private $image;
+
     public function __construct()
     {
         $this->parameters = new ArrayCollection();
@@ -144,6 +156,11 @@ class Device
         }
 
         return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
     }
 
     public function removeParameter(Parameter $parameter): self

@@ -14,7 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Translation\TranslatableMessage;
 
 class VendorController extends AbstractController
 {
@@ -32,10 +32,10 @@ class VendorController extends AbstractController
     /**
      * @Route("/admin/vendor/create", name="app_admin_vendor_create")
      */
-    public function create(Request $request, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
+    public function create(Request $request, EntityManagerInterface $entityManager): Response
     {
         $vendor = new Vendor();
-        $form = self::form($vendor, $entityManager, $translator);
+        $form = self::form($vendor, $entityManager);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
           $vendor->setCreatedAt();
@@ -52,11 +52,11 @@ class VendorController extends AbstractController
     /**
      * @Route("/admin/vendor/edit/{id}", name="app_admin_vendor_edit", requirements={"id"="\d+"})
      */
-    public function edit(Request $request, ManagerRegistry $doctrine, TranslatorInterface $translator, int $id): Response
+    public function edit(Request $request, ManagerRegistry $doctrine, int $id): Response
     {
         $entityManager = $doctrine->getManager();
         $vendor = $entityManager->getRepository(Vendor::class)->find($id);
-        $form = $this->form($vendor, $entityManager, $translator);
+        $form = $this->form($vendor, $entityManager);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
           $vendor->setUpdatedAt();
@@ -81,7 +81,7 @@ class VendorController extends AbstractController
         return $this->redirectToRoute('app_admin_vendor');
     }
 
-    private function form(Vendor $vendor, EntityManagerInterface $entityManager, TranslatorInterface $translator)
+    private function form(Vendor $vendor, EntityManagerInterface $entityManager)
     {
         $countries = $entityManager->getRepository(Country::class)->findAll();
         $form = $this->createFormBuilder($vendor)
@@ -89,7 +89,7 @@ class VendorController extends AbstractController
                 'attr' => ['class' => 'form-control'],
             ])
             ->add('country', ChoiceType::class, [
-                'label' => $translator->trans('Country'),
+                'label' => new TranslatableMessage('Country'),
                 'attr' => ['class' => 'form-select'],
                 'choices'  => $countries,
                 'choice_label' => function(?Country $country) {
@@ -106,7 +106,7 @@ class VendorController extends AbstractController
                 }
             ])
             ->add('save', SubmitType::class, [
-                'label' => 'Save',
+                'label' => new TranslatableMessage('Save'),
                 'attr' => ['class' => 'btn btn-primary mt-3'],
                 ])
             ->add('id', HiddenType::class, ['data_class' => null, 'mapped' => false,]);

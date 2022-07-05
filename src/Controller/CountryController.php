@@ -12,7 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Translation\TranslatableMessage;
 
 class CountryController extends AbstractController
 {
@@ -30,10 +30,10 @@ class CountryController extends AbstractController
     /**
      * @Route("/admin/country/create", name="app_admin_country_create")
      */
-    public function create(Request $request, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
+    public function create(Request $request, EntityManagerInterface $entityManager): Response
     {
         $country = new Country();
-        $form = self::form($country, $translator);
+        $form = self::form($country);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $country->setCreatedAt();
@@ -50,11 +50,11 @@ class CountryController extends AbstractController
     /**
      * @Route("/admin/country/edit/{id}", name="app_admin_country_edit", requirements={"id"="\d+"})
      */
-    public function edit(Request $request, ManagerRegistry $doctrine, TranslatorInterface $translator, int $id): Response
+    public function edit(Request $request, ManagerRegistry $doctrine, int $id): Response
     {
         $entityManager = $doctrine->getManager();
         $country = $entityManager->getRepository(Country::class)->find($id);
-        $form = $this->form($country, $translator);
+        $form = $this->form($country);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $country->setUpdatedAt();
@@ -79,26 +79,26 @@ class CountryController extends AbstractController
         return $this->redirectToRoute('app_admin_country');
     }
 
-    private function form(Country $country, TranslatorInterface $translator)
+    private function form(Country $country)
     {
         $form = $this->createFormBuilder($country)
             ->add('name', TextType::class, [
                 'attr' => ['class' => 'form-control'],
             ])
             ->add('abbr2', TextType::class, [
-                'label' => $translator->trans('Two-letter code'),
+                'label' => new TranslatableMessage('Two-letter code'),
                 'attr' => ['class' => 'form-control'],
             ])
             ->add('abbr3', TextType::class, [
-                'label' => $translator->trans('Three-letter code'),
+                'label' => new TranslatableMessage('Three-letter code'),
                 'attr' => ['class' => 'form-control'],
             ])
             ->add('code', TextType::class, [
-                'label' => $translator->trans('Code'),
+                'label' => new TranslatableMessage('Code'),
                 'attr' => ['class' => 'form-control'],
             ])
             ->add('save', SubmitType::class, [
-                'label' => 'Save',
+                'label' => new TranslatableMessage('Save'),
                 'attr' => ['class' => 'btn btn-primary mt-3'],
                 ])
             ->add('id', HiddenType::class, ['data_class' => null, 'mapped' => false,]);

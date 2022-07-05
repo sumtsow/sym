@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -16,7 +17,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Translation\TranslatableMessage;
 
 class DeviceController extends AbstractController
 {
@@ -43,10 +44,10 @@ class DeviceController extends AbstractController
     /**
      * @Route("/admin/device/create", name="app_admin_device_create")
      */
-    public function create(Request $request, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
+    public function create(Request $request, EntityManagerInterface $entityManager): Response
     {
         $device = new Device();
-        $form = self::form($device, $entityManager, $translator);
+        $form = self::form($device, $entityManager);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
           $device->setCreatedAt();
@@ -63,16 +64,24 @@ class DeviceController extends AbstractController
     /**
      * @Route("/admin/device/edit/{id}", name="app_admin_device_edit", requirements={"id"="\d+"})
      */
-    public function edit(Request $request, ManagerRegistry $doctrine, TranslatorInterface $translator, int $id): Response
+    public function edit(Request $request, ManagerRegistry $doctrine, int $id): Response
     {
         $entityManager = $doctrine->getManager();
         $device = $entityManager->getRepository(Device::class)->find($id);
-        $form = $this->form($device, $entityManager, $translator);
+        $form = $this->form($device, $entityManager);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
           $device->setUpdatedAt();
           $entityManager->persist($device);
           $entityManager->flush();
+          $image = $form->get('image');
+          if ($image) {
+            $file = $image->getData();
+            if ($file->getSize() < (20 * 1024 * 1024)) {
+              $directory = $this->getParameter('kernel.project_dir') . '/public/img/';
+              $file->move($directory, 'img-'.$device->getId().'.jpg');
+            }
+          }
           return $this->redirectToRoute('app_admin_device');
         }
         return $this->renderForm('device/device_form.html.twig', [
@@ -92,17 +101,17 @@ class DeviceController extends AbstractController
         return $this->redirectToRoute('app_admin_device');
     }
 
-    private function form(Device $device, EntityManagerInterface $entityManager, TranslatorInterface $translator)
+    private function form(Device $device, EntityManagerInterface $entityManager)
     {
         $types = $entityManager->getRepository(Type::class)->findAll();
         $vendors = $entityManager->getRepository(Vendor::class)->findAll();
         $form = $this->createFormBuilder($device)
             ->add('name', TextType::class, [
-                'label' => $translator->trans('Name'),
+                'label' => new TranslatableMessage('Name'),
                 'attr' => ['class' => 'form-control'],
             ])
             ->add('type', ChoiceType::class, [
-                'label' => $translator->trans('Type'),
+                'label' => new TranslatableMessage('Type'),
                 'attr' => ['class' => 'form-select'],
                 'choices'  => $types,
                 'choice_label' => function(?Type $type) {
@@ -110,15 +119,27 @@ class DeviceController extends AbstractController
                 },
             ])
             ->add('vendor', ChoiceType::class, [
-                'label' => $translator->trans('Vendor'),
+                'label' => new TranslatableMessage('Vendor'),
                 'attr' => ['class' => 'form-select'],
                 'choices'  => $vendors,
                 'choice_label' => function(?Vendor $vendor) {
                     return $vendor ? $vendor->getName() : '';
                 },
             ])
+            ->add('image', FileType::class, [
+                'mapped' => false,
+                'required' => false,
+                'label' =>  new TranslatableMessage('Image'),
+                'attr' => [
+                    'class' => 'form-control',
+                    'id' => 'image',
+                    'name' => 'image',
+                    'accept' => 'image/jpeg'
+                  ],
+                'label_attr' => ['class' => 'form-label mb-0']
+                ])
             ->add('save', SubmitType::class, [
-                'label' => $translator->trans('Save'),
+                'label' => new TranslatableMessage('Save'),
                 'attr' => ['class' => 'btn btn-primary mt-3'],
                 ])
             ->add('id', HiddenType::class, ['data_class' => null, 'mapped' => false,]);

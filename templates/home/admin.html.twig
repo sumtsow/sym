@@ -5,13 +5,13 @@
 {% block body %}
 <h1>{{ 'Home'|trans }} {{ 'page'|trans }}</h1>
 <h2>{{ 'Edit'|trans }}</h2>
-<ul>
-  <li><a href="{{ path('app_admin_device') }}">{{ 'Devices'|trans }}</a></li>
-  <li><a href="{{ path('app_admin_parameter') }}">{{ 'Parameters'|trans }}</a></li>
-  <li><a href="{{ path('app_admin_av_parameter') }}">{{ 'Available parameters'|trans }}</a></li>
-  <li><a href="{{ path('app_admin_param_option') }}">{{ 'Parameter Options'|trans }}</a></li>
-  <li><a href="{{ path('app_admin_type') }}">{{ 'Types'|trans }}</a></li>
-  <li><a href="{{ path('app_admin_vendor') }}">{{ 'Vendors'|trans }}</a></li>
-  <li><a href="{{ path('app_admin_country') }}">{{ 'Countries'|trans }}</a></li>
+<ul class="list-group">
+  <li><a class="list-group-item list-group-item-action" href="{{ path('app_admin_device') }}">{{ 'Devices'|trans }}</a></li>
+  <li><a class="list-group-item list-group-item-action" href="{{ path('app_admin_parameter') }}">{{ 'Parameters'|trans }}</a></li>
+  <li><a class="list-group-item list-group-item-action" href="{{ path('app_admin_av_parameter') }}">{{ 'Available parameters'|trans }}</a></li>
+  <li><a class="list-group-item list-group-item-action" href="{{ path('app_admin_param_option') }}">{{ 'Parameter Options'|trans }}</a></li>
+  <li><a class="list-group-item list-group-item-action" href="{{ path('app_admin_type') }}">{{ 'Types'|trans }}</a></li>
+  <li><a class="list-group-item list-group-item-action" href="{{ path('app_admin_vendor') }}">{{ 'Vendors'|trans }}</a></li>
+  <li><a class="list-group-item list-group-item-action" href="{{ path('app_admin_country') }}">{{ 'Countries'|trans }}</a></li>
 </ul>
 {% endblock %}

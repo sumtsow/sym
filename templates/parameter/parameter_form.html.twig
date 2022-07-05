@@ -5,7 +5,7 @@
 {% block body %}
 <div data-controller="admin-show">
   <h1>Edit parameter</h1>
-  <p>
+  <!--<p>
     <label for="select-device">Type</label>
     <select id="select-device" data-admin-show-target="select" data-action="change->admin-show#change">
       <option value="0" selected="selected">All</option>
@@ -13,7 +13,7 @@
       <option value="{{ type.getId() }}">{{ type.getName() }}</option>
       {% endfor %}
     </select>
-  </p>
+  </p>-->
   {{ form(parameterForm) }}
 </div>
 {% endblock %}

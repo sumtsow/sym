@@ -20,6 +20,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Translation\TranslatableMessage;
 
 class ParameterController extends AbstractController
 {
@@ -124,23 +125,35 @@ class ParameterController extends AbstractController
                 },
             ])
             ->add('prio', IntegerType::class, [
+                'label' => new TranslatableMessage('Prio'),
                 'attr' => ['class' => 'form-control'],
             ])
             ->add('av_parameter', ChoiceType::class, [
                 'label' => 'Parameter',
-                'attr' => ['class' => 'form-select'],
+                'attr' => [
+                    'class' => 'form-select',
+                    'data-admin-show-target' => 'select',
+                    'data-action' => 'change->admin-show#changeParam',
+                  ],
+                'placeholder' => '-',
                 'choices'  => $avParameters,
                 'choice_label' => function(?AvParameter $avParameter) {
                     return $avParameter ? $avParameter->getName() : '';
                 },
             ])
             ->add('value', ChoiceType::class, [
-                'attr' => ['class' => 'form-select'],
+                'attr' => [
+                    'class' => 'form-select',
+                    'data-admin-show-target' => 'rows',
+                ],
                 'placeholder' => '-',
                 'required' => false,
                 'choices'  => $paramOptions,
                 'choice_label' => function(?paramOption $paramOption) {
                     return $paramOption ? $paramOption->getValue() : '';
+                },
+                'choice_attr' => function($choice) {
+                    return ['data-parent' => $choice->getAvParameter()->getId()];
                 },
             ])
             ->add('custom_value', TextType::class, [

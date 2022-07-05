@@ -51,9 +51,7 @@ class DeviceController extends AbstractController
         $device = new Device();
         $form = self::form($device, $entityManager);
         $form->handleRequest($request);
-        $dir = $this->getParameter('kernel.project_dir').'/public'.self::IMAGE_DIR;
-        $filename = 'img-'.$device->getId().'.jpg';
-        $image = file_exists($dir.$filename) ? self::IMAGE_DIR.$filename : false;
+        $image = false;
         if ($form->isSubmitted() && $form->isValid()) {
           $device->setCreatedAt();
           $device->setUpdatedAt();
@@ -62,6 +60,8 @@ class DeviceController extends AbstractController
           $file = $form->get('image')->getData();
           if ($file) {
             if ($file->getMimeType() === 'image/jpeg') {
+              $dir = $this->getParameter('kernel.project_dir').'/public'.self::IMAGE_DIR;
+              $filename = 'img-'.$device->getId().'.jpg';
               $file->move($dir, $filename);
             } else {
               $error = new FormError('Bad Mime Type!');

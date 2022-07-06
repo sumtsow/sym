@@ -58,11 +58,19 @@ class ParameterController extends AbstractController
         $form = self::form($parameter, $entityManager);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-          $parameter->setCreatedAt();
-          $parameter->setUpdatedAt();
-          $entityManager->persist($parameter);
-          $entityManager->flush();
-          return $this->redirectToRoute('app_admin_parameter');
+          $prioExists = $entityManager->getRepository(Parameter::class)->findOneBy([
+              'prio' => $parameter->getPrio(),
+              'device' => $parameter->getDevice()
+              ]);
+          if (!$prioExists || $prioExists->getId() === $parameter->getId()) {
+            $parameter->setCreatedAt();
+            $parameter->setUpdatedAt();
+            $entityManager->persist($parameter);
+            $entityManager->flush();
+            return $this->redirectToRoute('app_admin_parameter');
+          }
+          $error = new FormError('This prio is used');
+          $form->get('prio')->addError($error);
         }
         return $this->renderForm('parameter/parameter_form.html.twig', [
             'parameterForm' => $form,

@@ -19,12 +19,9 @@ class ParamOption
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=1023)
+     * @ORM\Column(type="text")
      * @Assert\NotBlank
      * @Assert\Type("string")
-     * @Assert\Length(
-     *   max = 1023
-     * )
      */
     private $value;
 

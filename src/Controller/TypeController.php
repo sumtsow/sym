@@ -20,9 +20,8 @@ class TypeController extends AbstractController
      */
     public function index(ManagerRegistry $doctrine): Response
     {
-        $repository = $doctrine->getRepository(Type::class);
         return $this->render('type/index.html.twig', [
-            'types' => $repository->findAll(),
+            'types' => $doctrine->getRepository(Type::class)->findAll(),
         ]);
     }
 

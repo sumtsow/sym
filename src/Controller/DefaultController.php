@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Device;
+use App\Entity\Type;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,7 +19,8 @@ class DefaultController extends AbstractController
     public function index(ManagerRegistry $doctrine): Response
     {
         return $this->render('default/index.html.twig', [
-            'devices' => $doctrine->getRepository(Device::class)->findAll()
+            'devices' => $doctrine->getRepository(Device::class)->findAll(),
+            'types' => $doctrine->getRepository(Type::class)->findAll(),
         ]);
     }
 

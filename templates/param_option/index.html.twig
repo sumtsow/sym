@@ -7,7 +7,7 @@
   <h1>{{ 'Parameter options list'|trans }}</h1>
   <p>
     <label for="select-parameter">{{ 'Parameter'|trans }}</label>
-    <select id="select-parameter" data-admin-index-target="select" data-action="change->admin-index#change">
+    <select class="form-select" id="select-parameter" data-admin-index-target="select" data-action="change->admin-index#change">
       <option value="0" selected="selected">{{ 'All'|trans }}</option>
       {% for av_parameter in av_parameters %}
       <option value="{{ av_parameter.getId() }}">{{ av_parameter.getName() }}</option>

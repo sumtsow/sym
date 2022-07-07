@@ -3,18 +3,31 @@
 {% block title %}{{ 'Main'|trans }}{% endblock %}
 
 {% block body %}
-<div class="row row-cols-1 row-cols-md-3">
-  {% for device in devices %}
-  <div class="mt-3">
-    <a href="{{ path('app_device_edit', {id: device.getId()})}}">
-      <div class="card card-responsive h-100 shadow">
-        <img style="max-width: 200px; max-height: 200px;" src="/img/img-{{ device.getId() }}.jpg" class="card-img-top m-auto mt-3" alt="{{ device.getName() }} фото">
-        <div class="card-body pb-1">
-          <p class="text-dark">{{ device.getName()[:1]|upper ~ device.getName()[1:] }}</p>
-        </div>
-      </div>
-    </a>
+<div data-controller="index">
+  <div class="row" >
+    <div class="col">
+      <label for="select-device">{{ 'Type'|trans }}</label>
+      <select class="form-select" id="select-device" data-index-target="select" data-action="change->index#change">
+        <option value="0" selected="selected">{{ 'All'|trans }}</option>
+        {% for type in types %}
+        <option value="{{ type.getId() }}">{{ type.getName() }}</option>
+        {% endfor %}
+      </select>
+    </div>
   </div>
-  {% endfor %}
+  <div class="row row-cols-1 row-cols-md-3" data-index-target="items">
+    {% for device in devices %}
+    <div class="mt-3" data-type="{{ device.getType().getId() }}">
+      <a href="{{ path('app_device_edit', {id: device.getId()})}}">
+        <div class="card card-responsive h-100 shadow">
+          <img style="max-width: 200px; max-height: 200px;" src="/img/img-{{ device.getId() }}.jpg" class="card-img-top m-auto mt-3" alt="{{ device.getName() }} фото">
+          <div class="card-body pb-1">
+            <p class="text-dark">{{ device.getName()[:1]|upper ~ device.getName()[1:] }}</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    {% endfor %}
+  </div>
 </div>
 {% endblock %}

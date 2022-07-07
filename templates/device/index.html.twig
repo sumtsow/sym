@@ -7,7 +7,7 @@
   <h1>{{ 'Device list'|trans }}</h1>
   <p>
     <label for="select-type">{{ 'Type'|trans }}</label>
-    <select id="select-type" data-admin-index-target="select" data-action="change->admin-index#change">
+    <select class="form-select" id="select-type" data-admin-index-target="select" data-action="change->admin-index#change">
       <option value="0" selected="selected">{{ 'All'|trans }}</option>
       {% for type in types %}
       <option value="{{ type.getId() }}">{{ type.getName() }}</option>

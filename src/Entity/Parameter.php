@@ -40,11 +40,8 @@ class Parameter
     private $updated_at;
 
     /**
-     * @ORM\Column(type="string", length=1023, nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      * @Assert\Type("string")
-     * @Assert\Length(
-     *   max = 1023
-     * )
      */
     private $custom_value;
 

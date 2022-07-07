@@ -11,7 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -116,7 +116,7 @@ class ParamOptionController extends AbstractController
                     return $avParameter ? $avParameter->getName() : '';
                 },
             ])
-            ->add('value', TextType::class, [
+            ->add('value', TextareaType::class, [
                 'attr' => ['class' => 'form-control'],
             ])
             ->add('save', SubmitType::class, [

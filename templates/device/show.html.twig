@@ -31,7 +31,7 @@
   {% for parameter in device.getParameters() %}
     <tr>
       <th>{{ parameter.getAvParameter().getName() }}</th>
-      <td>{{ parameter.getValue() ? parameter.getValue().getValue() : parameter.getCustomValue() }}</td>
+      <td>{{ parameter.getValue() ? parameter.getValue().getValue()|nl2br : parameter.getCustomValue()|nl2br }}</td>
     </tr>
   {% endfor %}
   </tbody>

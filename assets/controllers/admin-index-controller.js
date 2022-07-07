@@ -27,6 +27,14 @@ export default class extends Controller {
           btnDelRow.append(btnDel);
           for (let id in json.rows) {
             let row = document.createElement('tr');
+            if (path === 'device') {
+              let imgCell = document.createElement('td'),
+                  img = document.createElement('img');
+              img.setAttribute('src', '/img/img-' + id + '.jpg');
+              img.setAttribute('style', 'width: 50px;');
+              imgCell.append(img);
+              row.append(imgCell);
+            }
             for (let prop in json.rows[id]) {
               let col = document.createElement('td');
               col.innerText = json.rows[id][prop];

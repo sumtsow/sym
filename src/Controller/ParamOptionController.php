@@ -148,7 +148,7 @@ class ParamOptionController extends AbstractController
                 ],
                 'choices'  => $avParameters,
                 'choice_label' => function(?AvParameter $avParameter) {
-                    return $avParameter ? $avParameter->getName() : '';
+                    return $avParameter ? $avParameter->getName().' ('.$avParameter->getType()->getName().')' : '';
                 },
                 'choice_attr' => function($choice) {
                     return ['data-type' => $choice->getType()->getId()];

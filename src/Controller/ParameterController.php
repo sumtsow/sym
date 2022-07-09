@@ -146,7 +146,7 @@ class ParameterController extends AbstractController
                 'placeholder' => '-',
                 'choices'  => $avParameters,
                 'choice_label' => function(?AvParameter $avParameter) {
-                    return $avParameter ? $avParameter->getName() : '';
+                    return $avParameter ? $avParameter->getName().' ('.$avParameter->getType()->getName().')' : '';
                 },
             ])
             ->add('value', ChoiceType::class, [

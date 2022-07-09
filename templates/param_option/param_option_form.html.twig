@@ -3,6 +3,17 @@
 {% block title %}{{ 'Edit'|trans }} {{ 'Parameter Options'|trans }}{% endblock %}
 
 {% block body %}
+<div data-controller="admin-show">
   <h1>{{ 'Edit'|trans }} {{ 'Parameter Options'|trans }}</h1>
+  <p>
+    <label for="select-type">{{ 'Type'|trans }}</label>
+    <select class="form-select" id="select-type" data-admin-show-target="select" data-action="change->admin-show#changeType">
+      <option value="0" selected="selected">{{ 'All'|trans }}</option>
+      {% for type in types %}
+      <option value="{{ type.getId() }}">{{ type.getName() }}</option>
+      {% endfor %}
+    </select>
+  </p>
   {{ form(paramOptionForm) }}
+</div>
 {% endblock %}

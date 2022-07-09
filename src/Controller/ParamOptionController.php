@@ -97,6 +97,7 @@ class ParamOptionController extends AbstractController
         }
         return $this->renderForm('param_option/param_option_form.html.twig', [
             'paramOptionForm' => $form,
+            'types' => $entityManager->getRepository(Type::class)->findAll(),
         ]);
     }
 
@@ -118,6 +119,7 @@ class ParamOptionController extends AbstractController
         }
         return $this->renderForm('param_option/param_option_form.html.twig', [
             'paramOptionForm' => $form,
+            'types' => $doctrine->getRepository(Type::class)->findAll(),
         ]);
     }
 
@@ -140,10 +142,16 @@ class ParamOptionController extends AbstractController
         $form = $this->createFormBuilder($paramOption)
             ->add('av_parameter', ChoiceType::class, [
                 'label' => new TranslatableMessage('Available parameter'),
-                'attr' => ['class' => 'form-select'],
+                'attr' => [
+                    'class' => 'form-select',
+                    'data-admin-show-target' => 'options',
+                ],
                 'choices'  => $avParameters,
                 'choice_label' => function(?AvParameter $avParameter) {
                     return $avParameter ? $avParameter->getName() : '';
+                },
+                'choice_attr' => function($choice) {
+                    return ['data-type' => $choice->getType()->getId()];
                 },
             ])
             ->add('value', TextareaType::class, [

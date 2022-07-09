@@ -1,7 +1,7 @@
 import { Controller } from '@hotwired/stimulus';
 
 export default class extends Controller {
-    static targets = ['select', 'rows', 'del'];
+    static targets = ['select', 'rows', 'del', 'types'];
 
     connect() {
       window.deleteRow = this.delete;
@@ -10,8 +10,9 @@ export default class extends Controller {
     }
 
     change() {
-      let path = this.rowsTarget.dataset.path;
-      fetch('/api/' + path + '/' + this.selectTarget.value)
+      let path = this.rowsTarget.dataset.path,
+          type = (path === 'device') ? document.location.search : ((path === 'param_option') ? '?type=' + this.typesTarget.value : '');
+      fetch('/api/' + path + '/' + this.selectTarget.value + type)
         .then(response => response.json())
         .then(json => {
           this.rowsTarget.innerText = '';
@@ -28,8 +29,7 @@ export default class extends Controller {
           for (let id in json.rows) {
             let row = document.createElement('tr');
             if (path === 'device') {
-              let imgCell = document.createElement('td'),
-                  img = document.createElement('img');
+              let imgCell = document.createElement('td');
               img.setAttribute('src', '/img/img-' + id + '.jpg');
               img.setAttribute('style', 'width: 50px;');
               imgCell.append(img);
@@ -40,7 +40,7 @@ export default class extends Controller {
               col.innerText = json.rows[id][prop];
               row.append(col);
             }
-            btnEdit.setAttribute('href', '/admin/' + path + '/edit/' + id);
+            btnEdit.setAttribute('href', '/admin/' + path + '/edit/' + id + type);
             row.append(btnEditRow.cloneNode(true));
             btnDel.setAttribute('href', '/admin/' + path + '/' + id);
             btnDel.setAttribute('onclick', 'window.deleteRow(' + id + ');');
@@ -48,6 +48,17 @@ export default class extends Controller {
             btnDel.setAttribute('data-admin-index-target', 'del');
             row.append(btnDelRow.cloneNode(true));
             this.rowsTarget.append(row);
+          }
+          if (path === 'param_option') {
+            let url = document.location.origin + document.location.pathname;
+            if (this.typesTarget.value != 0) url = url + '?type=' + this.typesTarget.value;
+            window.history.pushState({path: url}, '', url);
+            let isEmpty = this.typesTarget.value === '0';
+            for (let i in this.selectTarget.options) {
+              let option = this.selectTarget.options[i];
+              let inList = !!json.params[option.value];
+              if (option.value) option.classList.toggle('d-none', !(isEmpty || inList));
+            }
           }
         });
     }

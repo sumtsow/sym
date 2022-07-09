@@ -2,10 +2,10 @@
 
 namespace App\Controller;
 
-use App\Entity\ParamOption;
 use App\Entity\AvParameter;
+use App\Entity\ParamOption;
+use App\Entity\Type;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -23,26 +23,60 @@ class ParamOptionController extends AbstractController
     /**
      * @Route("/admin/param_option", name="app_admin_param_option")
      */
-    public function index(ManagerRegistry $doctrine): Response
+    public function index(Request $request, ManagerRegistry $doctrine): Response
     {
         return $this->render('param_option/index.html.twig', [
-            'av_parameters' => $doctrine->getRepository(AvParameter::class)->findAll(),
+            'av_parameters' => $av_parameters = $doctrine->getRepository(AvParameter::class)->findAll(),
+            'types' => $doctrine->getRepository(Type::class)->findAll(),
         ]);
     }
 
     /**
      * @Route("/api/param_option/{id?}", name="app_api_param_option")
      */
-    public function list(ManagerRegistry $doctrine, $id = 0): JsonResponse
+    public function list(Request $request, ManagerRegistry $doctrine, $id = 0): JsonResponse
     {
         $id = intval($id);
+        $type_id = intval($request->query->get('type'));
+        $type = false;
+        $options = $params = [];
+        if ($type_id) {
+          $type = $doctrine->getRepository(Type::class)->find($type_id);
+        }
         if ($id) {
           $avParameter = $doctrine->getRepository(AvParameter::class)->find($id);
           $options = $avParameter ? $avParameter->getParamOptions() : [];
+          if ($type) {
+            $avParameters = $type->getAvParameters();
+            if ($avParameters) {
+              foreach($avParameters as $avParameter) {
+                $params[$avParameter->getId()] = [
+                    'id' => $avParameter->getId(),
+                    'name' => $avParameter->getName(),
+                ];
+              }
+            }
+          }
         } else {
-          $options = $doctrine->getRepository(ParamOption::class)->findAll();
+          if ($type) {
+            $avParameters = $type->getAvParameters();
+            if ($avParameters) {
+              foreach($avParameters as $avParameter) {
+                $options = array_merge($options, $avParameter->getParamOptions()->toArray());
+                $params[$avParameter->getId()] = [
+                    'id' => $avParameter->getId(),
+                    'name' => $avParameter->getName(),
+                ];
+              }
+            }
+          } else {
+            $options = $doctrine->getRepository(ParamOption::class)->findAll();
+          }
         }
-        return $this->json(['rows' => ParamOption::toArray($options)]);
+        return $this->json([
+          'rows' => ParamOption::toArray($options),
+          'params' => $params,
+        ]);
     }
 
     /**
@@ -102,10 +136,6 @@ class ParamOptionController extends AbstractController
     private function form(ParamOption $paramOption, EntityManagerInterface $entityManager, int $type_id = 0)
     {
         $type_id = intval($type_id);
-        $rsm = new ResultSetMapping();
-        /*$query = $entityManager->createNativeQuery('SELECT `id`, `type_id`, `name`, `created_at`, `updated_at` FROM `av_parameter`  WHERE ' . ($type_id ? '`type_id` = ?' : '1'), $rsm);
-        if ($type_id) $query->setParameter(1, $type_id);
-        $avParameters = $query->getResult();*/
         $avParameters = $entityManager->getRepository(AvParameter::class)->findAll();
         $form = $this->createFormBuilder($paramOption)
             ->add('av_parameter', ChoiceType::class, [

@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'Compare'|trans }}{% endblock %}
+
+{% block body %}
+<div class="row align-items-center">
+  <div class="col">
+    <h1>{{ 'Compare'|trans }}</h1>
+    {% if error %}
+    <div class="alert alert-danger" role="alert">{{ error|trans }}</div>
+    {% else %}
+    <table class="table table-responsive table-striped">
+      <thead>
+        <tr>
+          <th>{{ 'Parameter'|trans }}</th>
+        {% for device in devices %}
+          <th>{{ device.getName() }}</th>
+        {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+      {% for parameter in parameters %}
+        <tr>
+          <th>{{ parameter.getName() }}</th>
+        {% for device in devices %}
+          <td>{{ device.getParameterByAvParameterId(parameter.getId()) ? (device.getParameterByAvParameterId(parameter.getId()).getValue() ? device.getParameterByAvParameterId(parameter.getId()).getValue().getValue() : device.getParameterByAvParameterId(parameter.getId()).getCustomValue()) : '-' }}</td>
+        {% endfor %}
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Device;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Connection;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -39,20 +40,18 @@ class DeviceRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Device[] Returns an array of Device objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('d')
-//            ->andWhere('d.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('d.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @return Device[] Returns an array of Device objects
+     */
+    public function findById(array $ids): array
+    {
+      return $ids ? $this->createQueryBuilder('d')
+        ->andWhere('d.id IN (:val)')
+        ->setParameter('val', $ids, Connection::PARAM_STR_ARRAY)
+        ->orderBy('d.id', 'ASC')
+        ->getQuery()
+        ->getResult() : [];
+    }
 
 //    public function findOneBySomeField($value): ?Device
 //    {
@@ -63,4 +62,18 @@ class DeviceRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    public function getParameterList($ids): array
+    {
+      $parameterList = $deviceParams = [];
+      if (!$ids) return $parameterList;
+      foreach ($ids as $id) {
+        $device = $this->find($id);
+        $params = $device->getParameters();
+        foreach ($params as $param) {
+          $parameterList[] = $param->getAvParameter()->getId();
+        }
+      }
+      return array_unique($parameterList);
+    }
 }

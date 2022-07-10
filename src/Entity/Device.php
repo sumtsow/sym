@@ -181,4 +181,17 @@ class Device
         }
         return $devicesArray;
     }
+
+    public function getParameterByAvParameterId($avParameterId): ?Parameter
+    {
+      $avParameterId = intval($avParameterId);
+      if (!$avParameterId) return null;
+      $parameters = $this->getParameters();
+      $parameter = $parameters->filter(function($param) use ($avParameterId) {
+          return intval($param->getAvParameter()->getId()) === $avParameterId;
+      });
+      $parameter = $parameter->first();
+      $parameter = $parameter ? $parameter : null;
+      return $parameter;
+    }
 }

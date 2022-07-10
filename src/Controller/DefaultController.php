@@ -3,12 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Device;
+use App\Entity\AvParameter;
 use App\Entity\Type;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Translation\TranslatableMessage;
 
 
 class DefaultController extends AbstractController
@@ -31,6 +33,38 @@ class DefaultController extends AbstractController
     {
         return $this->render('device/show.html.twig', [
             'device' => $doctrine->getRepository(Device::class)->find($id)
+        ]);
+    }
+
+    /**
+     * @Route("/compare", name="app_compare", methods={"POST"})
+     */
+    public function compare (Request $request, ManagerRegistry $doctrine): Response
+    {
+        $ids = array_map('intval', (array) json_decode($request->get('devices')));
+        $error = '';
+        $parameters = [];
+        $devices = [];
+        $hasDifferentTypes = false;
+        if (in_array(0, $ids)) {
+          $error .= new TranslatableMessage('Compare list error').'!';
+        } elseif(count($ids) > 10) {
+          $error .= new TranslatableMessage('Compare list length is too big').'!';
+        } else {
+          $rep = $doctrine->getRepository(Device::class);
+          $devices = $rep->findById($ids);
+          $firstType = $devices[0]->getType();
+          foreach ($devices as $device) {
+            $hasDifferentTypes = $hasDifferentTypes || $device->getType() !== $firstType;
+          }
+          $list = $rep->getParameterList($ids);
+          $parameters = $doctrine->getRepository(AvParameter::class)->findById($list);
+          if (!$devices || !$parameters || $hasDifferentTypes) $error .= new TranslatableMessage('Compare list error').'!';
+        }
+        return $this->render('device/compare.html.twig', [
+            'error' => $error,
+            'devices' => $devices,
+            'parameters' => $parameters
         ]);
     }
 

@@ -15,9 +15,17 @@
       </select>
     </div>
   </div>
+  <div class="row">
+    <div class="col">
+      <form method="post" action="/compare">
+        <input type="hidden" name="devices" id="devices"/>
+        <a data-index-target="btn" data-action="click->index#compare" class="btn btn-primary mt-3 disabled" role="button" aria-disabled="true">{{ 'Compare'|trans }}</a>
+      </form>
+    </div>
+  </div>
   <div class="row row-cols-1 row-cols-md-3" data-index-target="items">
     {% for device in devices %}
-    <div class="mt-3" data-type="{{ device.getType().getId() }}">
+    <div class="position-relative mt-3" data-type="{{ device.getType().getId() }}">
       <a href="{{ path('app_device_edit', {id: device.getId()})}}">
         <div class="card card-responsive h-100 shadow">
           <img style="max-width: 200px; max-height: 200px;" src="/img/img-{{ device.getId() }}.jpg" class="card-img-top m-auto mt-3" alt="{{ device.getName() }} фото">
@@ -26,6 +34,9 @@
           </div>
         </div>
       </a>
+      <div class="form-check position-absolute top-0 end-0 p-3">
+        <input class="form-check-input" type="checkbox" data-id="{{ device.getId() }}" title="{{ 'Add to compare'|trans }}" data-index-target="compare" data-action="input->index#switchCompare"/>
+      </div>
     </div>
     {% endfor %}
   </div>

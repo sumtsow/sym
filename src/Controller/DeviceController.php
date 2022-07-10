@@ -23,6 +23,7 @@ use Symfony\Component\Translation\TranslatableMessage;
 class DeviceController extends AbstractController
 {
     private const IMAGE_DIR = '/img/';
+
     /**
      * @Route("/admin/device", name="app_admin_device")
      */

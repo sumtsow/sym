@@ -99,6 +99,8 @@ class DefaultController extends AbstractController
     {
         $request->setLocale($_locale);
         $request->getSession()->set('_locale', $_locale);
-        return $this->redirect($request->server->get('HTTP_REFERER'));
+        $previousUrl = $request->server->get('HTTP_REFERER');
+        if (strpos($previousUrl, '/compare') !== false) $previousUrl = $this->generateUrl('app_default');
+        return $this->redirect($previousUrl);
     }
 }

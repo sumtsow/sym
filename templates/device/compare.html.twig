@@ -19,6 +19,12 @@
         </tr>
       </thead>
       <tbody>
+        <tr>
+          <th>{{ 'Image'|trans }}</th>
+          {% for device in devices %}
+          <td><img alt="{{ 'Image'|trans }} {{ device.getName() }}" src="/img/img-{{ device.getId() }}.jpg"/></td>
+          {% endfor %}
+        </tr>
       {% for parameter in parameters %}
         <tr>
           <th>{{ parameter.getName() }}</th>

@@ -47,9 +47,9 @@ class DefaultController extends AbstractController
         $devices = [];
         $hasDifferentTypes = false;
         if (in_array(0, $ids)) {
-          $error .= new TranslatableMessage('Compare list error').'!';
+          $error .= 'Compare list error!';
         } elseif(count($ids) > 10) {
-          $error .= new TranslatableMessage('Compare list length is too big').'!';
+          $error .= 'Compare list length is too big!';
         } else {
           $rep = $doctrine->getRepository(Device::class);
           $devices = $rep->findById($ids);
@@ -59,7 +59,7 @@ class DefaultController extends AbstractController
           }
           $list = $rep->getParameterList($ids);
           $parameters = $doctrine->getRepository(AvParameter::class)->findById($list);
-          if (!$devices || !$parameters || $hasDifferentTypes) $error .= new TranslatableMessage('Compare list error').'!';
+          if (!$devices || !$parameters || $hasDifferentTypes) $error .= 'Compare list error!';
         }
         return $this->render('device/compare.html.twig', [
             'error' => $error,

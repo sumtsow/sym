@@ -3,6 +3,14 @@
 {% block title %}{{ 'Edit'|trans }} {{ 'Type'|trans }}{% endblock %}
 
 {% block body %}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/home">{{ 'Home'|trans }}</a></li>
+      <li class="breadcrumb-item"><a href="/admin">{{ 'Admin Tools'|trans }}</a></li>
+      <li class="breadcrumb-item"><a href="/admin/type">{{ 'Types'|trans }}</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{ 'Type'|trans }}</li>
+    </ol>
+  </nav>
   <h1>{{ 'Edit'|trans }} {{ 'Type'|trans }}</h1>
   {{ form(typeForm) }}
 {% endblock %}

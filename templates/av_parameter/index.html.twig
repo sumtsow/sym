@@ -4,6 +4,13 @@
 
 {% block body %}
 <div data-controller="admin-index">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/home">{{ 'Home'|trans }}</a></li>
+      <li class="breadcrumb-item"><a href="/admin">{{ 'Admin Tools'|trans }}</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{ 'Available parameters'|trans }}</li>
+    </ol>
+  </nav>
   <h1>{{ 'Available parameters list'|trans }}</h1>
   <p>
     <label for="select-type">{{ 'Type'|trans }}</label>

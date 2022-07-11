@@ -3,6 +3,11 @@
 {% block title %}{{ 'Home'|trans }}{% endblock %}
 
 {% block body %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">{{ 'Home'|trans }}</li>
+  </ol>
+</nav>
 <h1>{{ 'Home'|trans }} {{ 'page'|trans }}</h1>
 <h2>{{ 'Tools'|trans }}</h2>
 <ul class="list-group">

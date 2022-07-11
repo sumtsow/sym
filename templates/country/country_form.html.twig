@@ -3,6 +3,14 @@
 {% block title %}{{ 'Edit'|trans }} {{ 'Country'|trans }}{% endblock %}
 
 {% block body %}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/home">{{ 'Home'|trans }}</a></li>
+      <li class="breadcrumb-item"><a href="/admin">{{ 'Admin Tools'|trans }}</a></li>
+      <li class="breadcrumb-item"><a href="/admin/country">{{ 'Countries'|trans }}</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{ 'Country'|trans }}</li>
+    </ol>
+  </nav>
   <h1>{{ 'Edit'|trans }} {{ 'Country'|trans }}</h1>
   {{ form(countryForm) }}
 {% endblock %}

@@ -1,8 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ 'Edit'|trans }} {{ 'Available parameters'|trans }}{% endblock %}
+{% block title %}{{ 'Edit'|trans }} {{ 'Available parameter'|trans }}{% endblock %}
 
 {% block body %}
-  <h1>{{ 'Edit'|trans }} {{ 'Available parameters'|trans }}</h1>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/home">{{ 'Home'|trans }}</a></li>
+    <li class="breadcrumb-item"><a href="/admin">{{ 'Admin Tools'|trans }}</a></li>
+    <li class="breadcrumb-item"><a href="/admin/av_parameter">{{ 'Available parameters'|trans }}</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ 'Available parameter'|trans }}</li>
+  </ol>
+</nav>
+<h1>{{ 'Edit'|trans }} {{ 'Available parameter'|trans }}</h1>
+
   {{ form(avParameterForm) }}
 {% endblock %}

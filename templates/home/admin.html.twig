@@ -1,9 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ 'Home'|trans }}{% endblock %}
+{% block title %}{{ 'Admin Tools'|trans }}{% endblock %}
 
 {% block body %}
-<h1>{{ 'Home'|trans }} {{ 'page'|trans }}</h1>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/home">{{ 'Home'|trans }}</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ 'Admin Tools'|trans }}</li>
+  </ol>
+</nav>
+<h1>{{ 'Admin Tools'|trans }}</h1>
 <h2>{{ 'Edit'|trans }}</h2>
 <ul class="list-group">
   <li><a class="list-group-item list-group-item-action" href="{{ path('app_admin_device') }}">{{ 'Devices'|trans }}</a></li>

@@ -29,7 +29,8 @@ export default class extends Controller {
           for (let id in json.rows) {
             let row = document.createElement('tr');
             if (path === 'device') {
-              let imgCell = document.createElement('td');
+              let imgCell = document.createElement('td'),
+                  img = document.createElement('img');
               img.setAttribute('src', '/img/img-' + id + '.jpg');
               img.setAttribute('style', 'width: 50px;');
               imgCell.append(img);

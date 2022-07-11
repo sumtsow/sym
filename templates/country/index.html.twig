@@ -4,6 +4,13 @@
 
 {% block body %}
 <div data-controller="admin-index">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/home">{{ 'Home'|trans }}</a></li>
+      <li class="breadcrumb-item"><a href="/admin">{{ 'Admin Tools'|trans }}</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{ 'Countries'|trans }}</li>
+    </ol>
+  </nav>
   <h1>{{ 'Country list'|trans }}</h1>
   <p><a class="btn btn-primary" role="button" href="{{ path('app_admin_country_create') }}">{{ 'Add new'|trans }}</a></p>
   <table class="table table-responsive table-striped">

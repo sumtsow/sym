@@ -12,7 +12,6 @@ use Doctrine\Persistence\ManagerRegistry;
  *
  * @method AvParameter|null find($id, $lockMode = null, $lockVersion = null)
  * @method AvParameter|null findOneBy(array $criteria, array $orderBy = null)
- * @method AvParameter[]    findAll()
  * @method AvParameter[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class AvParameterRepository extends ServiceEntityRepository
@@ -62,4 +61,9 @@ class AvParameterRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    public function findAll()
+    {
+      return $this->findBy([], ['id' => 'ASC']);
+    }
 }

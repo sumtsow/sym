@@ -44,7 +44,7 @@ final class Version20221228145710 extends AbstractMigration
         $this->addSql('CREATE INDEX IDX_256430617C29AE2 ON param_option (av_parameter_id)');
         $this->addSql('COMMENT ON COLUMN param_option.created_at IS \'(DC2Type:datetime_immutable)\'');
         $this->addSql('COMMENT ON COLUMN param_option.updated_at IS \'(DC2Type:datetime_immutable)\'');
-        $this->addSql('CREATE TABLE parameter (id INT NOT NULL, device_id INT NOT NULL, value_id INT DEFAULT NULL, av_parameter_id INT NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, custom_value TEXT DEFAULT NULL, prio INT NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE parameter (id INT NOT NULL, device_id INT NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, av_parameter_id INT NOT NULL, value_id INT DEFAULT NULL, custom_value TEXT DEFAULT NULL, prio INT NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_2A97911094A4C7D4 ON parameter (device_id)');
         $this->addSql('CREATE INDEX IDX_2A979110F920BBA2 ON parameter (value_id)');
         $this->addSql('CREATE INDEX IDX_2A97911017C29AE2 ON parameter (av_parameter_id)');
